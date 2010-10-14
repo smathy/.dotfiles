@@ -2,8 +2,8 @@
 
 source /etc/bash/bashrc
 
-export EDITOR=/usr/bin/vim
-export VISUAL=/usr/bin/vim
+export EDITOR=$(which vim)
+export VISUAL=$(which mvim)
 export PAGER=/usr/bin/less
 export PATH=~/bin:./script:./vendor/rails/railties/bin:./:$PATH:/opt/local/sbin:/usr/local/mysql/bin:/sbin:/usr/sbin
 export LANG=en_US.utf-8
