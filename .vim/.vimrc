@@ -61,9 +61,7 @@ map <S-F4> :set path+=
 map <F5> :split $HOME/.vimrc
 map <S-F5> :split $HOME/.gvimrc
 map <F6> :so $HOME/.vimrc
-map <F8> :let ttt=tempname():let smod=&mod:exec ':w! '.ttt:let @*=system('diff -bBu "'.bufname('%').'" "'.ttt.'"'):let @_=system('del '.ttt):let &mod=smod
-map <F9> :!svn diff <cfile>
-map <F10> :!svn revert %
+map <F8> :let ttt=tempname():let smod=&mod:exec ':w! '.ttt:let @*=system('diff -bBu "'.bufname('%').'" "'.ttt.'"'):let @_=system('rm '.ttt):let &mod=smod
 map <F11> ivim: set sts=2 sw=2 ts=8 co=90:<Up>
 imap <F11> vim: set sts=2 sw=2 ts=8 co=90:
 map <F13> :split $VIMRUNTIME/
@@ -74,6 +72,8 @@ nmap Oa {
 nmap Ob }
 nmap Oc W
 nmap Od B
+
+vmap  "xc# {{{}}}P-A 
 
 noremap ]] ][
 noremap ][ ]]
@@ -107,6 +107,9 @@ vmap <C-Del> "+d
 map <S-Insert> "+p
 
 map <C-D> :call Chdir()<CR>
+
+nnoremap <Down> g<Down>
+nnoremap <Up> g<Up>
 
 function! Chdir()
 	if expand('%:h') != ""
@@ -208,7 +211,6 @@ au BufNewFile,BufRead *.tpl setf smarty
 au BufNewFile,BufReadPre *.java imap /** /** *<BS>**/<Up>	
 au BufNewFile,BufReadPre *.htm,*.html,*.vbs,*.css set ic
 au BufNewFile *.htm,*.html 0read ~/.template.html
-au BufNewFile *.php 0read ~/.template.php
 au BufReadPost,FileReadPost,FilterReadPost,StdInReadPost,BufWritePost *.pm,*.pl call Add_perl_libs()
 au BufReadPost,FileReadPost,FilterReadPost,StdInReadPost,BufWritePost *.php call Add_php_libs()
 
@@ -239,3 +241,6 @@ au FileType ruby,eruby set omnifunc=rubycomplete#Complete
 " autocmd FileAppendPost		    *.gz !gzip <afile>:r
 
 syntax on
+
+set background=dark
+colorscheme solarized

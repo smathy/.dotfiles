@@ -14,6 +14,4 @@ map <D-Up> gt
 map <D-Down> gT
 
 set mousefocus
-
-colorscheme mine
-
+set transp=5

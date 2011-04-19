@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/jk/work/se/conf'
-let g:netrw_dirhist_2='/Users/jk/work/rails/activerecord/test/cases/associations'
-let g:netrw_dirhist_3='/Users/jk/work/ao/lib/php'
-let g:netrw_dirhist_4='/Users/jk/work/ao/config'
-let g:netrw_dirhist_5='/opt/local/lib/ruby/gems/1.8/gems/cloudfiles-1.4.8/lib/cloudfiles'
-let g:netrw_dirhist_6='/opt/local/lib/ruby/gems/1.8/gems/cloudfiles-1.4.8/lib'
-let g:netrw_dirhist_7='/Users/jk/work/ops'
