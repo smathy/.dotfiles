@@ -1,18 +1,16 @@
 # .bashrc:
 
-source /etc/bash/bashrc
-
 export EDITOR=$(which vim)
 export VISUAL=$(which mvim)
 export PAGER=/usr/bin/less
-export PATH=~/bin:./script:./vendor/rails/railties/bin:./:$PATH:/opt/local/sbin:/usr/local/mysql/bin:/sbin:/usr/sbin
+export PATH=~/bin:./script:./vendor/rails/railties/bin:./:$PATH:/opt/local/sbin:/sbin:/usr/sbin
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export LESS=$LESS\ -ifR
 export HISTSIZE=20000
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoreboth
-PROMPT_COMMAND=$PROMPT_COMMAND${PROMPT_COMMAND:+;}'PS1="\[\e[01m\]\t\[\e[0m\] \[\e[1;32m\]$(~/bin/branch.sh)\[\e[0m\]\[\e[1;35m\]$(~/bin/stash.sh)\[\e[0m\]\[\e[33m\]\w\[\e[0m\] \[\e[1m\]\$\[\e[0m\] "'
+PROMPT_COMMAND=$PROMPT_COMMAND${PROMPT_COMMAND:+;}'PS1="\t \[\e[32m\]$(~/bin/branch.sh)\[\e[0m\]\[\e[35m\]$(~/bin/stash.sh)\[\e[0m\]\[\e[33m\]\w\[\e[0m\] \[\e[1m\]\$\[\e[0m\] "'
 export RI=--format=ansi
 
 export EC2_HOME=/opt/local
@@ -28,23 +26,29 @@ export PHP_ENV=development
 alias g-cpan="sudo g-cpan"
 alias :q="exit"
 
-alias sb=.\ ~/.bash_profile
-alias vb=v\ ~/.bash_profile
+func_file=$HOME/bin/functions.bash
+
+alias sf=". $func_file"
+alias vf="v $func_file"
+
+alias sb='. ~/.bash_profile'
+alias vb='v ~/.bash_profile'
+alias vh='sudo mvim /etc/hosts'
 
 alias gh=~/bin/gh.sh
 alias lh=~/bin/lh.pl
 
 alias RM=rm\ -rf
 
-alias vv='sudo mvim ~/work/vhosts.conf'
 alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
-alias mm='mysql -u w'
-alias mt='mysql -u w thome'
-alias ma='mysql -u w amco'
-alias mw='mysql -u w amcoworld'
 alias ss='java -jar ~/work/selenium-server.jar > /dev/null 2>&1 &'
 
-source ~/bin/functions.bash
+alias sv='sudo mvim'
+
+alias mem='cd ~/personal/memory'
+alias ao='cd ~/work/ao'
+
+source $func_file
 
 tags() {
   dir=$1
