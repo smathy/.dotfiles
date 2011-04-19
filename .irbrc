@@ -1,3 +1,5 @@
+require 'rubygems'
+
 require 'irb/completion'
 require 'pp'
 
@@ -6,7 +8,6 @@ if ENV['RAILS_ENV']
 end
 
 require 'yaml'
-require 'rubygems'
 
 def v(x)
   IO.popen( 'mvim -', 'w') do |io|
@@ -19,3 +20,10 @@ def less(x)
     io.puts x.to_yaml
   end
 end
+
+class Object
+  def local_methods
+    (methods - Object.instance_methods).sort
+  end
+end
+
