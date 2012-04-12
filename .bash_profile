@@ -3,14 +3,38 @@
 export EDITOR=$(which vim)
 export VISUAL=$(which mvim)
 export PAGER=/usr/bin/less
-export PATH=~/bin:./script:./vendor/rails/railties/bin:./:$PATH:/opt/local/sbin:/sbin:/usr/sbin
+export PATH=~/bin:./script:./bin:./:$PATH:/opt/local/sbin:/sbin:/usr/sbin
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export LESS=$LESS\ -ifR
 export HISTSIZE=20000
 export HISTFILESIZE=$HISTSIZE
-export HISTCONTROL=ignoreboth
-PROMPT_COMMAND=$PROMPT_COMMAND${PROMPT_COMMAND:+;}'PS1="\t \[\e[32m\]$(~/bin/branch.sh)\[\e[0m\]\[\e[35m\]$(~/bin/stash.sh)\[\e[0m\]\[\e[33m\]\w\[\e[0m\] \[\e[1m\]\$\[\e[0m\] "'
+export HISTCONTROL=ignorespace:erasedups
+
+shopt -s histappend cdspell
+
+current_git_branch() {
+  git_exists=`git branch 2>/dev/null | sed -ne'/^\* /s///p'`
+
+  if [[ "$git_exists" != "" ]]; then
+    if [[ "$git_exists" == "(no branch)" ]]; then
+      git_exists="\e[31m\]$git_exists\e[0m\]"
+    fi
+    echo "$git_exists "
+  fi
+  unset git_exists
+}
+
+current_git_stash() {
+  git_stash=`git stash list 2>/dev/null | /usr/bin/wc -l | sed 's/ *//g'`
+
+  if [[ "$git_stash" != "" && $git_stash > 0 ]]; then
+    echo "[$git_stash] "
+  fi
+  unset git_stash
+}
+
+PROMPT_COMMAND=$PROMPT_COMMAND${PROMPT_COMMAND:+;}'PS1="\t \[\e[32m\]$(current_git_branch)\[\e[0m\]\[\e[35m\]$(current_git_stash)\[\e[0m\]\[\e[33m\]\w\[\e[0m\] \[\e[1m\]\$\[\e[0m\] "'
 export RI=--format=ansi
 
 export EC2_HOME=/opt/local
@@ -47,6 +71,11 @@ alias sv='sudo mvim'
 
 alias mem='cd ~/personal/memory'
 alias ao='cd ~/work/ao'
+
+alias vv='v -S .git/.vimsession'
+alias ce="VISUAL=cronvim crontab -e"
+
+gp() { git push --set-upstream origin $(branch.sh); }
 
 source $func_file
 

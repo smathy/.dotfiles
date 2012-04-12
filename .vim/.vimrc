@@ -9,6 +9,7 @@ set undodir=~/.vim/undo
 
 set fileencodings=ucs-bom,utf-8,latin1,default
 
+set backupskip=/tmp/*,/private/tmp/*
 set backupdir=$TEMP,.
 set selectmode=mouse
 set nobackup
@@ -22,7 +23,7 @@ set tags=~/.tags,.tags,../.tags,../../.tags,../../../.tags
 set backspace=2
 set whichwrap=<,>,[,],b,s
 
-set softtabstop=2 expandtab
+set smarttab expandtab
 set tabstop=2 shiftwidth=2
 set autoindent smartindent
 
@@ -43,6 +44,8 @@ set ruler
 set history=50
 set showcmd
 set hlsearch incsearch
+
+set hidden
 
 filetype plugin indent on
 
@@ -70,10 +73,9 @@ map <F13> :split $VIMRUNTIME/
 
 nmap <S-Tab> 
 
-nmap Oa {
-nmap Ob }
-nmap Oc W
-nmap Od B
+let macvim_skip_cmd_opt_movement=1
+nmap <M-Right> W
+nmap <M-Left> B
 
 vmap  "xc# {{{}}}P-A 
 
@@ -89,13 +91,13 @@ noremap g 
 noremap  g
 noremap g 
 
-map <M-Up> :bn
-map <M-Down>   :bp
-map <M-Home>     :br
-map <M-End>      :bl
-map <M-BS>      :bd
-map <M-Del>      :bd
-map <Del>        :bd
+noremap <M-Up> :bn
+noremap <M-Down>   :bp
+noremap <M-Home>     :br
+noremap <M-End>      :bl
+noremap <M-BS>      :bd
+noremap <M-Del>      :bd
+noremap <Del>        :bd
 map <M-Insert>   gf
 map <M-F15>      :buffers
 
@@ -139,7 +141,7 @@ sub find_bin {
 
 sub find_php_libs {
   require Cwd;
-  my $cwd = getcwd;
+  my $cwd = Cwd::getcwd();
   until( -f "${cwd}/config/_apache.conf.erb" || $cwd eq '/' ) {
     $cwd = Cwd::realpath("$cwd/..");
   }
@@ -242,6 +244,24 @@ au FileType ruby,eruby set omnifunc=rubycomplete#Complete
 " autocmd FileAppendPost		    *.gz !mv <afile> <afile>:r
 " autocmd FileAppendPost		    *.gz !gzip <afile>:r
 
+function! Make_vimsession()
+  execute("mksession! " . g:vimsession)
+endfunction
+
+command! SS call Make_vimsession()
+
+function! Set_vimsession()
+  let cwd = getcwd()
+  while ! ( isdirectory( cwd . "/.git" )  || cwd == "/" )
+    let cwd = simplify( cwd . "/.." )
+  endwhile
+  let g:vimsession = cwd . "/.git/.vimsession"
+endfunction
+
+au VimEnter * call Set_vimsession()
+" au VimLeave * call Make_vimsession()
+nmap ZZ :xa
+
 syntax on
 
 set background=dark
@@ -249,5 +269,4 @@ colorscheme solarized
 
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
-"let g:indent_guides_color_change_percent=5
 nmap <Leader>\ :IndentGuidesToggle<CR>:set invwrap<CR>
