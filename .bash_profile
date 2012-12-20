@@ -34,12 +34,8 @@ current_git_stash() {
   unset git_stash
 }
 
-PROMPT_COMMAND=$PROMPT_COMMAND${PROMPT_COMMAND:+;}'PS1="\t \[\e[32m\]$(current_git_branch)\[\e[0m\]\[\e[35m\]$(current_git_stash)\[\e[0m\]\[\e[33m\]\w\[\e[0m\] \[\e[1m\]\$\[\e[0m\] "'
+PROMPT_COMMAND='PS1="\t \[\e[32m\]$(current_git_branch)\[\e[0m\]\[\e[35m\]$(current_git_stash)\[\e[0m\]\[\e[33m\]\w\[\e[0m\] \[\e[1m\]\$\[\e[0m\] ";'$PROMPT_COMMAND
 export RI=--format=ansi
-
-export EC2_HOME=/opt/local
-export EC2_PRIVATE_KEY=~/.ec2/pk-AXG2P53OPV57GLYFMK2NIJDMT5KD7LB6.pem
-export EC2_CERT=~/.ec2/cert-AXG2P53OPV57GLYFMK2NIJDMT5KD7LB6.pem
 
 export ACK_COLOR_MATCH=magenta
 
@@ -47,30 +43,28 @@ export TAG=`date +%Y-%m-%d`
 
 export PHP_ENV=development
 
-alias g-cpan="sudo g-cpan"
-alias :q="exit"
+alias :q=exit
 
 func_file=$HOME/bin/functions.bash
+
+alias v=$VISUAL
+alias V=sudo\ v
 
 alias sf=". $func_file"
 alias vf="v $func_file"
 
 alias sb='. ~/.bash_profile'
 alias vb='v ~/.bash_profile'
-alias vh='sudo mvim /etc/hosts'
+alias VH='V /etc/hosts'
 
 alias gh=~/bin/gh.sh
 alias lh=~/bin/lh.pl
+alias git=hub
 
 alias RM=rm\ -rf
 
 alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
 alias ss='java -jar ~/work/selenium-server.jar > /dev/null 2>&1 &'
-
-alias sv='sudo mvim'
-
-alias mem='cd ~/personal/memory'
-alias ao='cd ~/work/ao'
 
 alias vv='v -S .git/.vimsession'
 alias ce="VISUAL=cronvim crontab -e"
