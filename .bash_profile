@@ -3,7 +3,7 @@
 export EDITOR=$(which vim)
 export VISUAL=$(which mvim)
 export PAGER=/usr/bin/less
-export PATH=~/bin:./script:./bin:./:$PATH:/opt/local/sbin:/sbin:/usr/sbin
+export PATH=~/bin:./node_modules/.bin:./script:./bin:./:$PATH:/opt/local/sbin:/sbin:/usr/sbin
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export LESS=$LESS\ -ifR

@@ -1,5 +1,9 @@
 --type-add=ruby=.haml
 --type-set=sass=.sass,.scss
---type-set=coffee=.coffee
+--type-set=coffee=.coffee,.iced
 --type-set=stylus=.stylus,.styl
+--type-set=jade=.jade
 --smart-case
+--follow
+--ignore-dir=node_modules
+--ignore-dir=vendor
