@@ -25,7 +25,7 @@ set whichwrap=<,>,[,],b,s
 
 set smarttab expandtab
 set tabstop=2 shiftwidth=2
-set autoindent smartindent
+set autoindent cindent
 
 set ignorecase smartcase
 
@@ -70,6 +70,8 @@ map <F8> :let ttt=tempname():let smod=&mod:exec ':w! '.ttt:let @*=system('dif
 map <F11> ivim: set sts=2 sw=2 ts=8 co=90:<Up>
 imap <F11> vim: set sts=2 sw=2 ts=8 co=90:
 map <F13> :split $VIMRUNTIME/
+
+imap <F13> <Insert>
 
 nmap <S-Tab> 
 
@@ -261,6 +263,8 @@ endfunction
 au VimEnter * call Set_vimsession()
 " au VimLeave * call Make_vimsession()
 nmap ZZ :xa
+
+command -nargs=1 T :tab sb <args>
 
 syntax on
 
