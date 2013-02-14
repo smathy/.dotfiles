@@ -79,6 +79,9 @@ let macvim_skip_cmd_opt_movement=1
 nmap <M-Right> W
 nmap <M-Left> B
 
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
 vmap  "xc# {{{}}}P-A 
 
 noremap ]] ][
