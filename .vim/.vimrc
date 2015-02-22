@@ -18,6 +18,8 @@ set wrap
 
 set foldmethod=marker
 
+set wildmenu wildmode=list:longest,list:full
+
 set tags=~/.tags,.tags,../.tags,../../.tags,../../../.tags
 
 set backspace=2
@@ -254,6 +256,7 @@ function! Make_vimsession()
 endfunction
 
 command! SS call Make_vimsession()
+command! Q q!
 
 function! Set_vimsession()
   let cwd = getcwd()
@@ -267,7 +270,7 @@ au VimEnter * call Set_vimsession()
 " au VimLeave * call Make_vimsession()
 nmap ZZ :xa
 
-command -nargs=1 T :tab sb <args>
+command! -nargs=1 T :tab sb <args>
 
 syntax on
 

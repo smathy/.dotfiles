@@ -1,5 +1,1 @@
 # vim: set ft=ruby:
-
-def ss n = 'educred'
-  Legacy::School.find_by_escuela n
-end

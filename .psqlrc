@@ -1,0 +1,5 @@
+\x auto
+\set COMP_KEYWORD_CASE upper
+\pset null '[null]'
+\set HISTCONTROL ignoredups
+

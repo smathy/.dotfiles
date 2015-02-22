@@ -418,12 +418,16 @@ snippet ts
 
 	require "tc_${1:test_case_file}"
 	require "tc_${2:test_case_file}"${3}
+snippet tt
+	test "${1:test name}" do
+		${2}
+	end
 snippet as
-	assert(${1:test}, "${2:Failure message.}")${3}
+	assert ${1:test}${3}
 snippet ase
-	assert_equal(${1:expected}, ${2:actual})${3}
+	assert_equal ${1:expected}, ${2:actual}
 snippet asne
-	assert_not_equal(${1:unexpected}, ${2:actual})${3}
+	assert_not_equal ${1:unexpected}, ${2:actual}
 snippet asid
 	assert_in_delta(${1:expected_float}, ${2:actual_float}, ${3:2 ** -20})${4}
 snippet asio
@@ -441,9 +445,13 @@ snippet asnm
 snippet aso
 	assert_operator(${1:left}, :${2:operator}, ${3:right})${4}
 snippet asr
-	assert_raise(${1:Exception}) { ${2} }
+	assert_raise ${1:Exception} do
+		${2}
+	end
 snippet asnr
-	assert_nothing_raised(${1:Exception}) { ${2} }
+	assert_nothing_raised ${1:Exception} do
+		${2}
+	end
 snippet asrt
 	assert_respond_to(${1:object}, :${2:method})${3}
 snippet ass assert_same(..)
