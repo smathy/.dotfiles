@@ -258,6 +258,12 @@ endfunction
 command! SS call Make_vimsession()
 command! Q q!
 
+command! BB call Copy_file_line()
+
+function! Copy_file_line()
+  let @* = printf('%s:%d', @%, line('.'))
+endfunction
+
 function! Set_vimsession()
   let cwd = getcwd()
   while ! ( isdirectory( cwd . "/.git" )  || cwd == "/" )
