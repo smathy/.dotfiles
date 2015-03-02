@@ -33,7 +33,6 @@ export PHP_ENV=development
 
 func_file=$HOME/bin/functions.bash
 
-alias v=$VISUAL
 alias V=sudo\ $VISUAL
 
 alias sf=". $func_file"
