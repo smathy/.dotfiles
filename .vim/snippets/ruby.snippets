@@ -514,3 +514,21 @@ snippet sos
 	save_and_open_screenshot
 snippet sop
 	save_and_open_page
+snippet describe
+	describe '${1:what?}' do
+		${2}
+	end
+snippet it
+	it '${1:should what?}' do
+		${2}
+	end
+snippet before
+	before { ${1} }
+snippet context
+	context '${1}' do
+		${2}
+	end
+snippet expect
+	expect( ${1} ).to be ${2}
+snippet let
+	let(${1}) { $2 }
