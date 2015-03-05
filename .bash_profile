@@ -51,7 +51,6 @@ alias lh=~/bin/lh.pl
 alias RM=rm\ -rf
 
 alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
-alias ss='java -jar ~/work/selenium-server.jar > /dev/null 2>&1 &'
 
 alias vv='mvim -S .git/.vimsession'
 alias ce="VISUAL=cronvim crontab -e"
@@ -87,6 +86,10 @@ tags() {
 md() {
   mkdir --parents $1
   cd $1
+}
+
+rsed() {
+  find {app,lib,spec,test} -type f -not -path '/.' -print0 2>/dev/null | xargs -0 sed -i'' -e "$@"
 }
 
 udevi() { udevinfo -a -p $(udevinfo -q path -n /dev/$1) | egrep 'model|vendor|product'; }
