@@ -52,7 +52,7 @@ alias RM=rm\ -rf
 
 alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
 
-alias vv='mvim -S .git/.vimsession'
+alias vv='mvim --servername $PWD -S .git/.vimsession'
 alias ce="VISUAL=cronvim crontab -e"
 
 alias ag="ag --smart-case --follow --color-match '35'"
