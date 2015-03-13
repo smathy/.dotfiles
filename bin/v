@@ -1,15 +1,15 @@
 #!/bin/bash
-OLDIFS=$IFS
-IFS=':'
-args=($@)
-IFS=$OLDIFS
 line=""
-if [[ "${args[1]}" != "" ]]; then
-  line="+${args[1]}"
+args=("$@")
+re=':[0-9]+$'
+if [[ ${#args[@]} == 1 && ${args[0]} =~ $re ]]; then
+  pos=$(expr index "${args[0]}" ":")
+  line="+${args[0]:$pos}"
+  args=("${args[0]:0:$pos-1}")
 fi
 
 if [[ "${args[0]}" == "-" ]]; then
   mvim -
 else
-  mvim --servername $PWD --remote-tab $line "${args[0]}" >/dev/null 2>&1
+  mvim --servername $PWD --remote-tab $line "${args[@]}" >/dev/null 2>&1
 fi
