@@ -4,11 +4,11 @@ map <F6> :so $HOME/.vimrc:so $HOME/.gvimrc
 set guifont=Monaco:h12
 "set guifont=Bitstream\ Vera\ Sans\ Mono:h10
 set encoding=utf-8
-set lines=76
+set lines=55
 if &diff
   set columns=250
 else
-  set columns=150
+  set columns=1000
 endif
 set textwidth=80
 set guioptions-=T

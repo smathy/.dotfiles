@@ -48,14 +48,17 @@ alias VH='V /etc/hosts'
 alias gh=~/bin/gh.sh
 alias lh=~/bin/lh.pl
 
-alias RM=rm\ -rf
+function RM() {
+  killall -m "spring .* \| $(basename $1) \|";
+  rm -rf $1;
+}
 
 alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
 
 alias vv='mvim --servername $PWD -S .git/.vimsession'
 alias ce="VISUAL=cronvim crontab -e"
 
-alias ag="ag --smart-case --follow --color-match '35'"
+alias ag="ag --smart-case --follow --color-match '35' --ignore vendor/assets"
 
 alias be="bundle exec"
 
@@ -64,6 +67,8 @@ alias cldns="sudo killall -HUP mDNSResponder"
 alias sudo='sudo '
 
 alias git=hub
+
+alias b="say -v zarvox beep beep"
 
 gp() { git push --set-upstream origin $(branch.sh); }
 

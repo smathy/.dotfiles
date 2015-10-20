@@ -1,19 +1,49 @@
-gem 'haml-rails'
-gem 'jquery-ui-rails'
+%w[slim-rails jquery-ui-rails simple_form responders foundation-rails rabl-rails trailblazer-rails trailblazer cells cells-slim].each do |gem|
+  gem "#{gem}"
+end
 
 gem_group :development, :test do
-  gem 'tapout'
-  gem 'minitap'
-  gem 'pry-rails'
-  gem 'simplecov'
+  gem "tapout"
+  gem "minitap"
 end
 
 gem_group :development do
-  gem 'better_errors'
+  gem "simplecov"
+  gem "pry-rails"
+  gem "better_errors"
+end
+
+%w[web-console jbuilder sdoc].each do |gem|
+  gsub_file "Gemfile", /(?:^[ \t]*#.*\n)?^.*#{gem}.*\n+/, ''
+end
+
+%w[bcrypt capistrano-rails].each do |re|
+  uncomment_lines "Gemfile", re
 end
 
 after_bundle do
-  run %{sed -i'' test/test_helper.rb -e"/ENV/r #{File.expand_path '../test_helper.snippet.rb', __FILE__}"}
-
-  run %{sed -i'' Rakefile -e"/Rails.application.load_tasks/r #{File.expand_path '../Rakefile.snippet', __FILE__}" -e"/Rails.application.load_tasks/d"}
+  run %{rails g foundation:install --force}
+  run %{rails g simple_form:install --force --foundation}
+  run %{rails g responders:install --force}
+  run %{erb2slim app/views/layouts/application.html.erb && rm app/views/layouts/application.html.erb}
+  git :init
+  git add: '.'
+  git commit: %{ -m init }
 end
+
+inside 'test' do
+  req = "tap_helper"
+  insert_into_file "test_helper.rb", %{require "tap_helper"\n\n}, :before => "class ActiveSupport::TestCase"
+
+  file req + ".rb", <<-EOI.strip_heredoc
+    require "minitest/autorun"
+    require "minitap"
+
+    Minitest.reporter = Minitap::TapY
+  EOI
+end
+
+
+inject_into_class "config/application.rb", "Application", <<-EOI
+    config.generators.test_unit[:fixture] = false
+EOI

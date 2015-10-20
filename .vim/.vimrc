@@ -98,20 +98,19 @@ noremap g 
 noremap  g
 noremap g 
 
-noremap <M-Up> :bn
-noremap <M-Down>   :bp
-noremap <M-Home>     :br
-noremap <M-End>      :bl
-noremap <M-BS>      :bd
-noremap <M-Del>      :bd
-noremap <Del>        :bd
+nnoremap <M-Up> :bn
+nnoremap <M-Down>   :bp
+nnoremap <M-Home>     :br
+nnoremap <M-End>      :bl
+nnoremap <M-BS>      :bd!
+nnoremap <M-Del>      :bd!
+nnoremap <Del>        :bd!
 map <M-Insert>   gf
 map <M-F15>      :buffers
 
-map <D-Left> :tabprevious
-imap <D-Left> :tabprevious
-map <D-Right> :tabnext
-imap <D-Right> :tabnext
+
+map <D-Left> :tabprevious<cr>
+map <D-Right> :tabnext<cr>
 
 vmap <C-Insert> "+y
 vmap <C-Del> "+d
@@ -259,6 +258,19 @@ command! SS call Make_vimsession()
 command! Q q!
 
 command! BB call Copy_file_line()
+
+noremap g<Right> :call G_head()<ENTER>
+noremap g<Left>  :call G_merge()<ENTER>
+
+function! G_head()
+  diffg //2
+  diffu
+endfunction
+
+function! G_merge()
+  diffg //3
+  diffu
+endfunction
 
 function! Copy_file_line()
   let @* = printf('%s:%d', @%, line('.'))

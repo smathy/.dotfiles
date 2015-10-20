@@ -1,1 +1,1 @@
---smart-case
+--smart-case --ignore vendor/assets
