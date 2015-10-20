@@ -1,0 +1,54 @@
+[user]
+  email = jk@handle.it
+  name = Jason King
+[github]
+  user = smathy
+  token = 7d698712479c54a6adf168260354e16d
+  ssl = true
+[core]
+  excludesfile = ~/.gitignore
+  editor = mvim -f -U ~/.gvimrc_git
+  autocrlf = false
+  whitespace = fix
+[color]
+  ui = auto
+[alias]
+  co = checkout
+  br = branch
+  ci = commit
+  m = checkout master
+  mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
+  rb = "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
+  rbm = rb master
+  rr = reset --hard origin/master
+  d = diff --color-words
+  s = show --color-words
+  sign = commit --amend -sC HEAD
+  amend = commit --amend -C HEAD
+  l = log --graph --date=short --pretty='format:%ad %C(yellow)%h%Creset %C(blue)%aN%Creset %s%C(yellow)%d%Creset'
+  lc = log --no-merges --graph --pretty='format:%h %s'
+  ll = log --decorate --pretty=fuller --shortstat --abbrev-commit --dirstat
+  la = log --decorate --pretty=fuller --stat --abbrev-commit --name-status
+  lp = log --decorate --pretty=fuller --stat --patch
+  p = format-patch master
+  pr = pull-request
+  st = status -sb
+  cp = cherry-pick
+  up = push
+  down = pull
+  mg = merge --no-ff
+  rc = rebase --continue
+  b = blame --abbrev=6
+  root = !pwd
+  root = !pwd -P
+  cb = co -b
+[push]
+  default = tracking
+[diff]
+  renames = copies
+[clean]
+  requireForce = false
+[branch]
+  autosetuprebase=local
+[hub]
+  protocol = ssh
