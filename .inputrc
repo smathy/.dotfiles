@@ -11,6 +11,7 @@ set keymap vi-insert
 "\ea": emacs-editing-mode
 "\C-l": clear-screen
 "\C-e": end-of-line
+"\C-a": beginning-of-line
 "\C-k": kill-line
 "\e[5C": forward-word
 "\e[5D": backward-word
