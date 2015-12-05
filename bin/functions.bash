@@ -232,6 +232,9 @@ reset_db() {
     psql -d $root_db -c "CREATE DATABASE $db"
     pg_restore -d $db $bup
   done
+
+  psql -c "UPDATE users SET encrypted_address_1 = NULL, encrypted_address_2 = NULL, encrypted_city = NULL, encrypted_state = NULL, encrypted_zip = NULL, encrypted_country = NULL, encrypted_phone = NULL, encrypted_date_of_birth = NULL, encrypted_ssn = NULL"
+  psql -c "UPDATE companies SET encrypted_tax_id = NULL, encrypted_address_1 = NULL, encrypted_address_2 = NULL, encrypted_city = NULL, encrypted_state = NULL, encrypted_zip = NULL, encrypted_country = NULL, encrypted_phone = NULL"
 }
 
 current_git_branch() {
@@ -239,10 +242,11 @@ current_git_branch() {
 }
 
 current_git_stash() {
-  cgs=$(git stash list 2>/dev/null)
-  if [[ "$cgs" != "" ]]; then
-    cgs=$(echo $cgs | wc -l)
+  git_stash=`git stash list 2>/dev/null | wc -l | sed 's/ *//g'`
+
+  if [[ "$git_stash" != "" && $git_stash > 0 ]]; then
+    echo $git_stash
   fi
-  echo $cgs
-  unset cgs
+  unset git_stash
 }
+

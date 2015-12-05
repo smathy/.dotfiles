@@ -4,7 +4,6 @@ export EDITOR=$(which vim)
 export VISUAL=$(which mvim)
 export GIT_EDITOR="$(which mvim) -f"
 export PAGER=/usr/bin/less
-export PATH=~/bin:./bin:./node_modules/.bin:$PATH:/opt/local/sbin:/sbin:/usr/sbin
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export LESS=$LESS\ -ifR
@@ -32,76 +31,13 @@ export TAG=`date +%Y-%m-%d`
 
 export PHP_ENV=development
 
-func_file=$HOME/bin/functions.bash
-
-alias V=sudo\ $VISUAL
-
-alias sf=". $func_file"
-alias vf="v $func_file"
-
-alias sb='. ~/.bash_profile'
-alias vb='v ~/.bash_profile'
-alias VH='V /etc/hosts'
-
-alias gh=~/bin/gh.sh
-alias lh=~/bin/lh.pl
-
-function RM() {
-  str=$(pgrep "spring .* $(basename $1)")
-  if [[ "$str" != "" ]]; then
-    kill $str
-  fi
-  unset str
-  rm -rf $1
-}
-
-alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
-
-alias vv='mvim --servername $PWD -S .git/.vimsession'
-alias ce="VISUAL=cronvim crontab -e"
-
-alias ag="ag --smart-case --follow --color-match '35' --ignore vendor/assets"
-
-alias be="bundle exec"
-
-alias cldns="sudo killall -HUP mDNSResponder"
-
-alias sudo='sudo '
-
-alias git=hub
-
-alias b="say -v zarvox beep beep"
-
-gp() { git push --set-upstream origin $(branch.sh); }
-
-source $func_file
-
-tags() {
-  dir=$1
-  if [[ "$dir" == "" ]]; then
-    dir='.'
-  fi
-
-  if [[ ! -d $dir ]]; then
-    echo $'\e[1;31m'Error: $dir is not a directory.$'\e[0m'
-    return 1
-  fi
-
-  ctags -Rf "$dir/.tags" "$dir" $(bundle list --paths)
-}
-
-md() {
-  mkdir -p $1
-  cd $1
-}
-
-rsed() {
-  find {app,lib,spec,test} -type f -not -path '/.' -print0 2>/dev/null | xargs -0 sed -i'' -e "$@"
-}
-
-udevi() { udevinfo -a -p $(udevinfo -q path -n /dev/$1) | egrep 'model|vendor|product'; }
+. ~/.aliases
+. ~/.functions
 
 eval "$(rbenv init -)"
 
+export PATH=~/bin:./bin:./node_modules/.bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH:/opt/local/sbin:/sbin:/usr/sbin
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="$PATH:/usr/local/heroku/bin"

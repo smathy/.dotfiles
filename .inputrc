@@ -1,17 +1,33 @@
 $include /etc/inputrc
 set show-all-if-ambiguous on
 set completion-ignore-case on
-set editing-mode vi
-
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-Control-E:forward-search-history
 
 set keymap vi-insert
-"\ea": emacs-editing-mode
 "\C-l": clear-screen
-"\C-e": end-of-line
 "\C-a": beginning-of-line
+"\C-e": end-of-line
 "\C-k": kill-line
 "\e[5C": forward-word
 "\e[5D": backward-word
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+"\t": menu-complete
+"\e[Z": menu-complete-backward
+
+set keymap vi
+"\C-l": clear-screen
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-k": kill-line
+"\e[5C": forward-word
+"\e[5D": backward-word
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+"\t": menu-complete
+"\e[Z": menu-complete-backward
+
+set editing-mode vi

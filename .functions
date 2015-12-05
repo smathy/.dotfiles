@@ -1,0 +1,67 @@
+function current_git_stash() {
+  git_stash=`git stash list 2>/dev/null | wc -l | sed 's/ *//g'`
+
+  if [[ "$git_stash" != "" && $git_stash > 0 ]]; then
+    echo $git_stash
+  fi
+  unset git_stash
+}
+
+function current_git_branch() {
+  git rev-parse --abbrev-ref HEAD 2>/dev/null
+}
+
+function reset_db() {
+  base_db="peerstreet"
+  bup=$1
+  root_db="postgres"
+  for db in ${base_db} ${base_db}_test; do
+    psql -d $root_db -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '$db' AND pid <> pg_backend_pid()"
+    psql -d $root_db -c "DROP DATABASE $db"
+    psql -d $root_db -c "CREATE DATABASE $db"
+    pg_restore -d $db $bup
+  done
+}
+
+RLAST=test
+
+function r() {
+  if [[ "$*" != "" ]]; then
+    RLAST=$*
+  fi
+  rake $RLAST | tapout runtime
+}
+
+function RM() {
+  str=$(pgrep "spring .* $(basename $1)")
+  if [[ "$str" != "" ]]; then
+    kill $str
+  fi
+  unset str
+  rm -rf $1
+}
+
+function tags() {
+  dir=$1
+  if [[ "$dir" == "" ]]; then
+    dir='.'
+  fi
+
+  if [[ ! -d $dir ]]; then
+    echo $'\e[1;31m'Error: $dir is not a directory.$'\e[0m'
+    return 1
+  fi
+
+  ctags -Rf "$dir/.tags" "$dir" $(bundle list --paths)
+}
+
+function md() {
+  mkdir -p $1
+  cd $1
+}
+
+function rsed() {
+  find {app,lib,spec,test} -type f -not -path '/.' -print0 2>/dev/null | xargs -0 sed -i'' -e "$@"
+}
+
+# vim: set syntax=zsh:

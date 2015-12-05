@@ -49,6 +49,8 @@ set hlsearch incsearch
 
 set hidden
 
+set noballooneval
+
 filetype plugin indent on
 
 set viminfo='100,\"50,n~/.viminfo
@@ -259,6 +261,7 @@ command! Q q!
 
 command! BB call Copy_file_line()
 
+set diffopt+=vertical
 noremap g<Right> :call G_head()<ENTER>
 noremap g<Left>  :call G_merge()<ENTER>
 

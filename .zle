@@ -1,0 +1,50 @@
+bindkey -v
+export KEYTIMEOUT=1
+
+bindkey "^L" clear-screen
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+
+bindkey "^[f" forward-word
+bindkey "^[b" backward-word
+
+bindkey "^K" kill-line
+
+bindkey "^[[3~" delete-char
+bindkey -M vicmd "^[[3~" delete-char
+
+bindkey -M viins '^R' history-incremental-search-backward
+bindkey -M vicmd '^R' history-incremental-search-backward
+
+bindkey -s "^[Op" "0"
+bindkey -s "^[Ol" "."
+bindkey -s "^[OM" "^M"
+# 1 2 3
+bindkey -s "^[Oq" "1"
+bindkey -s "^[Or" "2"
+bindkey -s "^[Os" "3"
+# 4 5 6
+bindkey -s "^[Ot" "4"
+bindkey -s "^[Ou" "5"
+bindkey -s "^[Ov" "6"
+# 7 8 9
+bindkey -s "^[Ow" "7"
+bindkey -s "^[Ox" "8"
+bindkey -s "^[Oy" "9"
+# + -  * /
+bindkey -s "^[Ok" "+"
+bindkey -s "^[Om" "-"
+bindkey -s "^[Oj" "*"
+bindkey -s "^[Oo" "/"
+
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey "^[OA" history-beginning-search-backward-end
+bindkey "^[OB" history-beginning-search-forward-end
+
+bindkey -M vicmd "^[OA" history-beginning-search-backward-end
+bindkey -M vicmd "^[OB" history-beginning-search-forward-end
+
+# vim: set filetype=zsh:

@@ -14,18 +14,21 @@
   ui = auto
 [alias]
   co = checkout
+  cc = checkout -
   br = branch
   ci = commit
   m = checkout master
   mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
   rb = "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
-  rbm = rb master
+  rbm = "!git rb master"
+  rba = "!git rb --abort"
+  rbc = "!git rb --continue"
   rr = reset --hard origin/master
   d = diff --color-words
   s = show --color-words
   sign = commit --amend -sC HEAD
   amend = commit --amend -C HEAD
-  l = log --graph --date=short --pretty='format:%ad %C(yellow)%h%Creset %C(blue)%aN%Creset %s%C(yellow)%d%Creset'
+  l = log --graph --date='format:%Y-%m-%d %H:%M:%S' --pretty='format:%ad %C(yellow)%h%Creset %C(blue)%aN%Creset %s%C(yellow)%d%Creset'
   lc = log --no-merges --graph --pretty='format:%h %s'
   ll = log --decorate --pretty=fuller --shortstat --abbrev-commit --dirstat
   la = log --decorate --pretty=fuller --stat --abbrev-commit --name-status
@@ -41,7 +44,6 @@
   b = blame --abbrev=6
   root = !pwd
   root = !pwd -P
-  cb = co -b
 [push]
   default = tracking
 [diff]
