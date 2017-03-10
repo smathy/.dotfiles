@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/smathy/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -53,11 +53,22 @@ plugins=(git bundler osx rake ruby)
 
 # User configuration
 
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/Users/smathy/.rbenv/shims:./node_modules/.bin:/usr/local/heroku/bin:$PATH"
-export PATH="./bin:$HOME/bin:$PATH"
+if [ -d /opt/local ]; then
+  PATH=/opt/local/lib/mysql5/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH
+  MANPATH=/opt/local/man:/usr/local/man:$MANPATH
+fi
 
-export MANPATH="/usr/local/man:$MANPATH"
+if [ -d /usr/local/opt/coreutils ]; then
+  PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+fi
+
+if [ -d /usr/local/opt/gnu-sed ]; then
+  PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+fi
+
+PATH="./node_modules/.bin:$PATH"
+
+MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,13 +111,26 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""
 export LSCOLORS="exfxcxdxbxbxbxbxbxbxbx"
 export LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=31;40:cd=31;40:su=31;40:sg=31;40:tw=31;40:ow=31;40:"
 
-export PGDATABASE=peerstreet
+export PGDATABASE=postgres
 
 . ~/.aliases
 . ~/.functions
 . /etc/bash/bash_pop
 . ~/.zle
+. ~/.secrets
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+PATH="./bin:$HOME/bin:$PATH"
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 setopt no_hist_verify
+unsetopt nomatch
+
+eval "$(dircolors ~/.dir_colors)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+export PATH MANPATH
+export LESS=$LESS\ -ifR
+export REDIS_URL=redis://localhost:6379/0

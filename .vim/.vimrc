@@ -9,6 +9,8 @@ set undodir=~/.vim/undo
 
 set fileencodings=ucs-bom,utf-8,latin1,default
 
+set splitbelow splitright
+
 set backupskip=/tmp/*,/private/tmp/*
 set backupdir=$TEMP,.
 set selectmode=mouse
@@ -18,7 +20,7 @@ set wrap
 
 set foldmethod=marker
 
-set wildmenu wildmode=list:longest,list:full
+set wildmenu wildmode=list:longest,list:full wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 set tags=~/.tags,.tags,../.tags,../../.tags,../../../.tags
 
@@ -28,6 +30,7 @@ set whichwrap=<,>,[,],b,s
 set smarttab expandtab
 set tabstop=2 shiftwidth=2
 set autoindent cindent
+set breakindent breakindentopt="shift:2 sbr"
 
 set ignorecase smartcase
 
@@ -82,6 +85,12 @@ nmap <S-Tab> 
 let macvim_skip_cmd_opt_movement=1
 nmap <M-Right> W
 nmap <M-Left> B
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/](\.(git|hg|svn)|doc)$',
+	\ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'

@@ -29,7 +29,23 @@ function r() {
   if [[ "$*" != "" ]]; then
     RLAST=$*
   fi
-  rake $RLAST | tapout runtime
+  bin/rake $RLAST | tapout runtime
+}
+
+RRLAST=
+
+function rr() {
+  if [[ "$*" != "" ]]; then
+    RRLAST=($@)
+  fi
+  rrr ${RRLAST[@]} | tapout runtime
+}
+
+function rrr() {
+  if [[ "$*" != "" ]]; then
+    RRLAST=($@)
+  fi
+  bundle exec ruby -Ilib:test ${RRLAST[@]}
 }
 
 function RM() {
@@ -55,6 +71,7 @@ function tags() {
   ctags -Rf "$dir/.tags" "$dir" $(bundle list --paths)
 }
 
+unalias md
 function md() {
   mkdir -p $1
   cd $1
@@ -62,6 +79,10 @@ function md() {
 
 function rsed() {
   find {app,lib,spec,test} -type f -not -path '/.' -print0 2>/dev/null | xargs -0 sed -i'' -e "$@"
+}
+
+function ff() {
+  find $* -type f
 }
 
 # vim: set syntax=zsh:

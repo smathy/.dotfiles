@@ -38,6 +38,3 @@ eval "$(rbenv init -)"
 
 export PATH=~/bin:./bin:./node_modules/.bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH:/opt/local/sbin:/sbin:/usr/sbin
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-### Added by the Heroku Toolbelt
-export PATH="$PATH:/usr/local/heroku/bin"

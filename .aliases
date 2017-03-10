@@ -24,7 +24,7 @@ alias cldns="sudo killall -HUP mDNSResponder"
 
 alias sudo='sudo '
 
-alias git=hub
+function git(){hub $@}
 
 alias b="say -v zarvox beep beep"
 

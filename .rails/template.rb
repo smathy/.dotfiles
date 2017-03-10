@@ -1,4 +1,4 @@
-%w[slim-rails jquery-ui-rails simple_form responders foundation-rails rabl-rails trailblazer-rails trailblazer cells cells-slim].each do |gem|
+%w[slim-rails jquery-ui-rails simple_form responders rabl-rails].each do |gem|
   gem "#{gem}"
 end
 
@@ -22,8 +22,7 @@ end
 end
 
 after_bundle do
-  run %{rails g foundation:install --force}
-  run %{rails g simple_form:install --force --foundation}
+  run %{rails g simple_form:install --force}
   run %{rails g responders:install --force}
   run %{erb2slim app/views/layouts/application.html.erb && rm app/views/layouts/application.html.erb}
   git :init
