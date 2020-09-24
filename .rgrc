@@ -1,0 +1,11 @@
+--colors=match:fg:magenta
+--smart-case
+--glob=!public
+--glob=!vendor
+--glob=!tmp
+--glob=!log
+--glob=!coverage
+--glob=!bin
+--glob=!spec
+--glob=!android/app/src/main/assets/index.android.bundle
+--type-not=svg
