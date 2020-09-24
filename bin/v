@@ -8,8 +8,10 @@ if [[ ${#args[@]} == 1 && ${args[0]} =~ $re ]]; then
   args=("${args[0]:0:$pos-1}")
 fi
 
-if [[ "${args[0]}" == "-" ]]; then
-  mvim -
+if [[ "${args[0]}" == "" ]]; then
+  gvim
+elif [[ "${args[0]}" == "-" ]]; then
+  gvim -
 else
-  mvim --servername $PWD --remote-tab $line "${args[@]}" >/dev/null 2>&1
+  gvim --servername $PWD --remote-tab $line "${args[@]}" >/dev/null 2>&1
 fi

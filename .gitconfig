@@ -15,11 +15,16 @@
 [alias]
   co = checkout
   cc = checkout -
+  cb = checkout -b
   br = branch
-  ci = commit
+  ci = commit --allow-empty-message
   m = checkout master
+  ss = checkout staging
+  dd = checkout develop
   mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
   rb = "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
+  rbi = "!git rb -i"
+  rbii = "!git rb -i HEAD~10"
   rbm = "!git rb master"
   rba = "!git rb --abort"
   rbc = "!git rb --continue"
@@ -34,10 +39,11 @@
   la = log --decorate --pretty=fuller --stat --abbrev-commit --name-status
   lp = log --decorate --pretty=fuller --stat --patch
   p = format-patch master
-  pr = pull-request
+  prr = pull-request
   st = status -sb
   cp = cherry-pick
   up = push
+  upp = push -f
   down = pull
   mg = merge --no-ff
   rc = rebase --continue
@@ -45,12 +51,14 @@
   root = !pwd
   root = !pwd -P
 [push]
-  default = tracking
+	default = current
 [diff]
   renames = copies
 [clean]
   requireForce = false
 [branch]
-  autosetuprebase=local
+	autosetuprebase = always
 [hub]
   protocol = ssh
+[log]
+	date = iso-local

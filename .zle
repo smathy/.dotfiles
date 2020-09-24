@@ -20,7 +20,7 @@ bindkey -M viins '^R' history-incremental-search-backward
 bindkey -M vicmd '^R' history-incremental-search-backward
 
 bindkey -s "^[Op" "0"
-bindkey -s "^[Ol" "."
+bindkey -s "^[On" "."
 bindkey -s "^[OM" "^M"
 # 1 2 3
 bindkey -s "^[Oq" "1"

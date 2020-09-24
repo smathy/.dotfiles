@@ -3,6 +3,9 @@ call pathogen#runtime_append_all_bundles()
 set nocompatible
 behave xterm
 
+set nobeval
+let g:netrw_nobeval = 1
+
 set popt=paper:letter
 set undofile
 set undodir=~/.vim/undo
@@ -15,8 +18,6 @@ set backupskip=/tmp/*,/private/tmp/*
 set backupdir=$TEMP,.
 set selectmode=mouse
 set nobackup
-"set sidescrolloff=10 sidescroll=1 nowrap
-set wrap
 
 set foldmethod=marker
 
@@ -25,12 +26,19 @@ set wildmenu wildmode=list:longest,list:full wildignore+=*/tmp/*,*.so,*.swp,*.zi
 set tags=~/.tags,.tags,../.tags,../../.tags,../../../.tags
 
 set backspace=2
-set whichwrap=<,>,[,],b,s
 
-set smarttab expandtab
-set tabstop=2 shiftwidth=2
+set smarttab expandtab tabstop=2 shiftwidth=2
 set autoindent cindent
+
+set whichwrap=<,>,[,],b,s
+set wrap
 set breakindent breakindentopt="shift:2 sbr"
+set linebreak showbreak=>\  
+set breakat=\ ^I}.(
+
+let g:indent_guides_guide_size=1
+let g:indent_guides_start_level=2
+nmap <Leader>\ :IndentGuidesToggle<CR>
 
 set ignorecase smartcase
 
@@ -42,8 +50,6 @@ set keywordprg=
 
 set cmdheight=2
 set formatoptions=crq
-set linebreak
-set showbreak=^\ 
 set ruler
 
 set history=50
@@ -66,6 +72,10 @@ if !exists("g:done_path_adjustment")
   let &path = substitute( &path, '\\', '/', 'g')
   let &path = substitute( &path, ' ', '\\ ', 'g')
 endif
+
+
+map <F1> <nop>
+map! <F1> <nop>
 
 map <F4> :set ft=
 map <S-F4> :set path+=
@@ -97,11 +107,13 @@ let g:ctrlp_cmd = 'CtrlP'
 
 vmap  "xc# {{{}}}P-A 
 
+noremap <C-W><C-V>f :vert winc f<CR>
+noremap <C-W>vf :vert winc f<CR>
 noremap ]] ][
 noremap ][ ]]
 
 map j Jx
-map \ :s<Up>
+noremap \ :s<Up>
 map Y y$
 
 noremap  g
@@ -261,14 +273,11 @@ au FileType ruby,eruby set omnifunc=rubycomplete#Complete
 " autocmd FileAppendPost		    *.gz !mv <afile> <afile>:r
 " autocmd FileAppendPost		    *.gz !gzip <afile>:r
 
-function! Make_vimsession()
-  execute("mksession! " . g:vimsession)
-endfunction
-
-command! SS call Make_vimsession()
+command! GG :%!git diff
 command! Q q!
 
 command! BB call Copy_file_line()
+command! W :Gw
 
 set diffopt+=vertical
 noremap g<Right> :call G_head()<ENTER>
@@ -297,7 +306,12 @@ function! Set_vimsession()
 endfunction
 
 au VimEnter * call Set_vimsession()
-" au VimLeave * call Make_vimsession()
+function! Make_vimsession()
+  execute("mksession! " . g:vimsession)
+endfunction
+
+command! SS call Make_vimsession()
+
 nmap ZZ :xa
 
 command! -nargs=1 T :tab sb <args>
@@ -306,7 +320,3 @@ syntax on
 
 set background=dark
 colorscheme solarized
-
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
-nmap <Leader>\ :IndentGuidesToggle<CR>:set invwrap<CR>

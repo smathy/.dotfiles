@@ -49,7 +49,7 @@ HYPHEN_INSENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git bundler osx rake ruby)
+plugins=(bundler osx rake ruby)
 
 # User configuration
 
@@ -64,6 +64,10 @@ fi
 
 if [ -d /usr/local/opt/gnu-sed ]; then
   PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+fi
+
+if [ -d /usr/local/opt/python ]; then
+  PATH=/usr/local/opt/python/libexec/bin:$PATH
 fi
 
 PATH="./node_modules/.bin:$PATH"
@@ -100,7 +104,7 @@ source $ZSH/oh-my-zsh.sh
 if [ $UID -eq 0 ]; then NCOLOR="red"; PR="#"; else NCOLOR="yellow"; PR="$" fi
 
 PROMPT='%{$fg[$NCOLOR]%}%~ %{$reset_color%}'
-RPROMPT='%{$fg[$NCOLOR]%}%p %{$fg[green]%}$(current_git_branch)%{$fg[red]%}$(parse_git_dirty) %{$fg[magenta]%}$(current_git_stash)%{$reset_color%}  %*'
+RPROMPT='%{$fg[$NCOLOR]%}%p %{$fg[green]%}$(current_git_branch)%{$fg[red]%} [$(git_prompt_short_sha)] %{$fg[magenta]%}$(current_git_stash)%{$reset_color%}  %*'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="git:"
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
@@ -115,7 +119,7 @@ export PGDATABASE=postgres
 
 . ~/.aliases
 . ~/.functions
-. /etc/bash/bash_pop
+. ~/.dotfiles/.pop.sh
 . ~/.zle
 . ~/.secrets
 
@@ -125,12 +129,32 @@ PATH="./bin:$HOME/bin:$PATH"
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-setopt no_hist_verify
+setopt no_hist_verify extendedglob
 unsetopt nomatch
 
-eval "$(dircolors ~/.dir_colors)"
+eval "$(dircolors ~/.dircolors)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 export PATH MANPATH
 export LESS=$LESS\ -ifR
-export REDIS_URL=redis://localhost:6379/0
+export REDIS_URL=redis://localhost:6379
+export EDITOR=vim
+export VISUAL=gvim
+
+export SQLALCHEMY_DATABASE_URI=postgres://localhost:5432/frontline
+
+export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
+export RIPGREP_CONFIG_PATH=~/.rgrc
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"

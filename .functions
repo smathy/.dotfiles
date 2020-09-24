@@ -23,29 +23,28 @@ function reset_db() {
   done
 }
 
-RLAST=test
-
-function r() {
-  if [[ "$*" != "" ]]; then
-    RLAST=$*
+r() {
+  if [[ "$*" == "" ]]; then
+    rails routes
+  else
+    rails routes | ag $*
   fi
-  bin/rake $RLAST | tapout runtime
 }
 
-RRLAST=
+TLAST=
 
-function rr() {
-  if [[ "$*" != "" ]]; then
-    RRLAST=($@)
+t() {
+  if [[ "$*" == "" ]]; then
+    rails test
+  else
+    TLAST=$*
+    rails test $*
   fi
-  rrr ${RRLAST[@]} | tapout runtime
 }
 
-function rrr() {
-  if [[ "$*" != "" ]]; then
-    RRLAST=($@)
-  fi
-  bundle exec ruby -Ilib:test ${RRLAST[@]}
+tt() {
+  echo "t $TLAST"
+  rails test $TLAST
 }
 
 function RM() {
@@ -68,7 +67,11 @@ function tags() {
     return 1
   fi
 
-  ctags -Rf "$dir/.tags" "$dir" $(bundle list --paths)
+  if [[ -d "$dir/.bundle" ]]; then
+    ctags -Rf "$dir/.tags" "$dir" $(bundle list --paths | grep "^/");
+  else
+    ctags -Rf "$dir/.tags" "$dir"
+  fi
 }
 
 unalias md
@@ -83,6 +86,11 @@ function rsed() {
 
 function ff() {
   find $* -type f
+}
+
+vr() {
+  v $*
+  rspec $*
 }
 
 # vim: set syntax=zsh:

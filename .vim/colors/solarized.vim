@@ -301,7 +301,7 @@ if has("gui_running") && g:solarized_degrade == 0
     let s:g_back        = "#002b36"
     let s:g_base03      = "#002b36"
     let s:g_base02      = "#073642"
-    let s:g_base01      = "#586e75"
+    let s:g_base01      = "#384e55"
     let s:g_base00      = "#657b83"
     let s:g_base0       = "#839496"
     let s:g_base1       = "#93a1a1"
@@ -654,7 +654,7 @@ exe "hi Todo"           . s:fg_magenta.s:bg_none   .s:fmt_bold
 "Highlighting groups for various occasions
 "-----------------------------------------
 exe "hi SpecialKey"     . s:fg_base02 .s:bg_none   .s:fmt_none
-exe "hi NonText"        . s:fg_base02 .s:bg_none   .s:fmt_bold
+exe "hi NonText"        . s:fg_base01 .s:bg_none   .s:fmt_bold
 exe "hi Directory"      . s:fg_blue   .s:bg_none   .s:fmt_none
 exe "hi ErrorMsg"       . s:fg_red    .s:bg_none   .s:fmt_revr
 exe "hi IncSearch"      . s:fg_yellow .s:bg_none   .s:fmt_revr

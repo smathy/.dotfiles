@@ -1,22 +1,19 @@
-alias ag="ag --smart-case --follow --color-match '35' --color-path '36' --ignore vendor/assets"
-
-alias V=sudo\ $VISUAL
+alias V=sudo\ mvim
 
 alias sb='. ~/.bash_profile'
 alias vb='v ~/.bash_profile'
 alias vz='v ~/.zshrc'
 alias VH='V /etc/hosts'
 
-alias gh=~/bin/gh.sh
 alias lh=~/bin/lh.pl
 
 alias ts="date +%Y%m%d%H%M%S"
 alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push --tags'
 
-alias vv='mvim --servername $PWD -S .git/.vimsession'
+alias vv='v $(pbpaste)'
 alias ce="VISUAL=cronvim crontab -e"
 
-alias ag="ag --smart-case --follow --color-match '35' --color-path '36' --ignore vendor/assets"
+alias ag=rg
 
 alias be="bundle exec"
 
@@ -26,8 +23,9 @@ alias sudo='sudo '
 
 function git(){hub $@}
 
-alias b="say -v zarvox beep beep"
+alias b="say -v fred beep beep"
+alias k="java -jar $(brew list kotlin | head -1 | cut -d/ -f1-6)/libexec/lib/kotlin-compiler.jar -script"
 
-alias ss="spring stop"
+alias ls="gls --group-directories-first --color=tty"
 
 # vim: set syntax=zsh:

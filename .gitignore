@@ -4,3 +4,10 @@
 .byebug_history
 .DS_Store
 dump.rdb
+erd.pdf
+*.dump
+Procfile.me
+bin/dbsync
+/node_modules/
+/*.info
+/venv
