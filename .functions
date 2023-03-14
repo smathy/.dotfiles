@@ -1,14 +1,25 @@
 function current_git_stash() {
-  git_stash=`git stash list 2>/dev/null | wc -l | sed 's/ *//g'`
+  local git_stash=`git stash list 2>/dev/null | wc -l | sed 's/ *//g'`
 
-  if [[ "$git_stash" != "" && $git_stash > 0 ]]; then
-    echo $git_stash
+  if [[ -n "$git_stash" && $git_stash > 0 ]]; then
+    echo " $git_stash"
   fi
-  unset git_stash
 }
 
 function current_git_branch() {
-  git rev-parse --abbrev-ref HEAD 2>/dev/null
+  local git_branch=`git rev-parse --abbrev-ref HEAD 2>/dev/null`
+
+  if [[ -n "$git_branch" ]]; then
+    echo " $git_branch"
+  fi
+}
+
+current_git_hash() {
+  local git_hash=`git_prompt_short_sha`
+
+  if [[ -n "$git_hash" ]]; then
+    echo " $git_hash"
+  fi
 }
 
 function reset_db() {
@@ -93,4 +104,4 @@ vr() {
   rspec $*
 }
 
-# vim: set syntax=zsh:
+# vim: ft=zsh

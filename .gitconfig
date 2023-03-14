@@ -7,9 +7,10 @@
   ssl = true
 [core]
   excludesfile = ~/.gitignore
-  editor = mvim -f -U ~/.gvimrc_git
+  editor = vim --clean
   autocrlf = false
   whitespace = fix
+  pager = delta
 [color]
   ui = auto
 [alias]
@@ -54,6 +55,7 @@
 	default = current
 [diff]
   renames = copies
+  colorMoved = default
 [clean]
   requireForce = false
 [branch]
@@ -62,3 +64,15 @@
   protocol = ssh
 [log]
 	date = iso-local
+[init]
+	defaultBranch = master
+
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  line-numbers = true
+  syntax-theme = Solarized (dark)
+[merge]
+  conflictstyle = diff3

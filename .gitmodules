@@ -1,24 +1,24 @@
 [submodule ".vim/bundle/vim-indent-guides"]
 	path = .vim/bundle/vim-indent-guides
-	url = git://github.com/nathanaelkane/vim-indent-guides.git
+	url = git@github.com:nathanaelkane/vim-indent-guides.git
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
+	url = git@github.com:tpope/vim-fugitive.git
 [submodule ".vim/bundle/vim-bundler"]
 	path = .vim/bundle/vim-bundler
-	url = git://github.com/tpope/vim-bundler.git
+	url = git@github.com:tpope/vim-bundler.git
 [submodule ".vim/bundle/vim-json"]
 	path = .vim/bundle/vim-json
-	url = https://github.com/elzr/vim-json.git
+	url = git@github.com:tpope/vim-json.git
 [submodule ".vim/bundle/vim-rails"]
 	path = .vim/bundle/vim-rails
-	url = git://github.com/tpope/vim-rails.git
+	url = git@github.com:tpope/vim-rails.git
 [submodule ".vim/bundle/vim-slim"]
 	path = .vim/bundle/vim-slim
-	url = git://github.com/slim-template/vim-slim.git
+	url = git@github.com:slim-template/vim-slim.git
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
-	url = git://github.com/robbyrussell/oh-my-zsh.git
+	url = git@github.com:robbyrussell/oh-my-zsh.git
 [submodule ".vim/bundle/vim-elixir"]
 	path = .vim/bundle/vim-elixir
 	url = git@github.com:elixir-editors/vim-elixir.git
