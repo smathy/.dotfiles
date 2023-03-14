@@ -19,3 +19,21 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = git://github.com/robbyrussell/oh-my-zsh.git
+[submodule ".vim/bundle/vim-elixir"]
+	path = .vim/bundle/vim-elixir
+	url = git@github.com:elixir-editors/vim-elixir.git
+[submodule ".vim/bundle/vim-javascript"]
+	path = .vim/bundle/vim-javascript
+	url = git@github.com:pangloss/vim-javascript.git
+[submodule ".vim/bundle/vim-phoenix"]
+	path = .vim/bundle/vim-phoenix
+	url = git@github.com:avdgaag/vim-phoenix.git
+[submodule ".vim/bundle/vim-projectionist"]
+	path = .vim/bundle/vim-projectionist
+	url = git@github.com:tpope/vim-projectionist.git
+[submodule ".vim/bundle/vim-repeat"]
+	path = .vim/bundle/vim-repeat
+	url = git@github.com:tpope/vim-repeat.git
+[submodule ".vim/bundle/vim-surround"]
+	path = .vim/bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git

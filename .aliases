@@ -1,7 +1,6 @@
-alias V=sudo\ mvim
+alias v=vimr
+alias V=sudo\ v
 
-alias sb='. ~/.bash_profile'
-alias vb='v ~/.bash_profile'
 alias vz='v ~/.zshrc'
 alias VH='V /etc/hosts'
 
@@ -13,19 +12,15 @@ alias gt='export TAG=`date +%Y-%m-%d` && git pull && git tag -f $TAG && git push
 alias vv='v $(pbpaste)'
 alias ce="VISUAL=cronvim crontab -e"
 
-alias ag=rg
-
 alias be="bundle exec"
 
 alias cldns="sudo killall -HUP mDNSResponder"
 
-alias sudo='sudo '
-
-function git(){hub $@}
-
 alias b="say -v fred beep beep"
-alias k="java -jar $(brew list kotlin | head -1 | cut -d/ -f1-6)/libexec/lib/kotlin-compiler.jar -script"
+#alias k="java -jar $(brew list kotlin | head -1 | cut -d/ -f1-6)/libexec/lib/kotlin-compiler.jar -script"
 
 alias ls="gls --group-directories-first --color=tty"
 
-# vim: set syntax=zsh:
+alias cat=bat
+
+# vim: ft=zsh
