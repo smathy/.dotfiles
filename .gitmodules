@@ -1,39 +1,3 @@
-[submodule ".vim/bundle/vim-indent-guides"]
-	path = .vim/bundle/vim-indent-guides
-	url = git@github.com:nathanaelkane/vim-indent-guides.git
-[submodule ".vim/bundle/vim-fugitive"]
-	path = .vim/bundle/vim-fugitive
-	url = git@github.com:tpope/vim-fugitive.git
-[submodule ".vim/bundle/vim-bundler"]
-	path = .vim/bundle/vim-bundler
-	url = git@github.com:tpope/vim-bundler.git
-[submodule ".vim/bundle/vim-json"]
-	path = .vim/bundle/vim-json
-	url = git@github.com:tpope/vim-json.git
-[submodule ".vim/bundle/vim-rails"]
-	path = .vim/bundle/vim-rails
-	url = git@github.com:tpope/vim-rails.git
-[submodule ".vim/bundle/vim-slim"]
-	path = .vim/bundle/vim-slim
-	url = git@github.com:slim-template/vim-slim.git
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = git@github.com:robbyrussell/oh-my-zsh.git
-[submodule ".vim/bundle/vim-elixir"]
-	path = .vim/bundle/vim-elixir
-	url = git@github.com:elixir-editors/vim-elixir.git
-[submodule ".vim/bundle/vim-javascript"]
-	path = .vim/bundle/vim-javascript
-	url = git@github.com:pangloss/vim-javascript.git
-[submodule ".vim/bundle/vim-phoenix"]
-	path = .vim/bundle/vim-phoenix
-	url = git@github.com:avdgaag/vim-phoenix.git
-[submodule ".vim/bundle/vim-projectionist"]
-	path = .vim/bundle/vim-projectionist
-	url = git@github.com:tpope/vim-projectionist.git
-[submodule ".vim/bundle/vim-repeat"]
-	path = .vim/bundle/vim-repeat
-	url = git@github.com:tpope/vim-repeat.git
-[submodule ".vim/bundle/vim-surround"]
-	path = .vim/bundle/vim-surround
-	url = git@github.com:tpope/vim-surround.git

@@ -6,6 +6,5 @@
 --glob=!log
 --glob=!coverage
 --glob=!bin
---glob=!spec
 --glob=!android/app/src/main/assets/index.android.bundle
 --type-not=svg

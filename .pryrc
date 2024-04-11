@@ -6,8 +6,20 @@ Pry::Commands.block_command 'r' do |*w|
   run "show-routes" + ( w.present? ? " --grep '#{w.join ' '}'" : "" )
 end
 
-Pry::Commands.block_command "ag" do |w|
-  run %{.ag '#{w}'}
+Pry::Commands.block_command "rg" do |w|
+  run %{.rg '#{w}'}
+end
+
+Pry::Commands.block_command ".." do |w|
+  run %{cd ..}
+end
+
+Pry::Commands.block_command "..." do |w|
+  run %{cd ../..}
+end
+
+Pry::Commands.block_command "...." do |w|
+  run %{cd ../../..}
 end
 
 if defined? FactoryGirl
@@ -28,3 +40,15 @@ if defined?(PryByebug)
   
 end
 
+Pry.config.prompt = Pry::Prompt.new(
+  "mine",
+  "My custom prompt",
+  [ proc { |obj, nest_level, _|
+    nest_string = (nest_level > 0 ? ":#{nest_level}" : '')
+    "\e[33m#{obj}#{nest_string}>\e[0m "
+  }]
+)
+
+Pry.config.output_prefix = ""
+
+# vim: set ft=ruby :

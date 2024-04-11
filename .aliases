@@ -1,4 +1,4 @@
-alias v=vimr
+alias v=nvim-qt
 alias V=sudo\ v
 
 alias vz='v ~/.zshrc'
@@ -22,5 +22,6 @@ alias b="say -v fred beep beep"
 alias ls="gls --group-directories-first --color=tty"
 
 alias cat=bat
+alias rm="rm -rf"
 
 # vim: ft=zsh

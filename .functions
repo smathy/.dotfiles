@@ -85,7 +85,7 @@ function tags() {
   fi
 }
 
-unalias md
+unalias md 2>/dev/null
 function md() {
   mkdir -p $1
   cd $1
@@ -102,6 +102,10 @@ function ff() {
 vr() {
   v $*
   rspec $*
+}
+
+int() {
+	kill -INT -$1
 }
 
 # vim: ft=zsh

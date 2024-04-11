@@ -1,5 +1,5 @@
 [user]
-  email = jk@handle.it
+  email = jk@radical.gd
   name = Jason King
 [github]
   user = smathy
@@ -7,7 +7,7 @@
   ssl = true
 [core]
   excludesfile = ~/.gitignore
-  editor = vim --clean
+  editor = nvim
   autocrlf = false
   whitespace = fix
   pager = delta
@@ -60,6 +60,7 @@
   requireForce = false
 [branch]
 	autosetuprebase = always
+	sort = -committerdate
 [hub]
   protocol = ssh
 [log]
@@ -73,6 +74,16 @@
   navigate = true    # use n and N to move between diff sections
   light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
   line-numbers = true
+  hyperlinks = true
   syntax-theme = Solarized (dark)
+  minus-style = red normal
+  plus-style = green normal
 [merge]
   conflictstyle = diff3
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[rerere]
+	enabled = true
