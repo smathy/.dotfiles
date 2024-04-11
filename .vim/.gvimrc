@@ -1,7 +1,7 @@
 "source $HOME/.vimrc
 map <F6> :so $HOME/.vimrc:so $HOME/.gvimrc
 
-set guifont=Monaco:h11
+set guifont=AnonymicePro\ Nerd\ Font:h13
 "set guifont=Bitstream\ Vera\ Sans\ Mono:h10
 set encoding=utf-8
 set lines=84
