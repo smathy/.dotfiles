@@ -8,7 +8,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- vim.g.ruby_host_prog = '~/.asdf/shims/neovim-ruby-host'
 
-
+opt.scrolloff = 999
 opt.smartcase = true
 opt.ignorecase = true
 opt.showmode = false
@@ -89,9 +89,7 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
--- }}}
 
--- {{{ plugins
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
@@ -100,6 +98,8 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
   'tpope/vim-abolish',
   'yosssi/vim-ace',
+  'equalsraf/neovim-gui-shim',
+  'matchit',
 
   -- Detect tabstop and shiftwidth automatically
   -- 'tpope/vim-sleuth',
@@ -222,6 +222,14 @@ require('lazy').setup({
   'tpope/vim-rails',
   'slim-template/vim-slim',
 
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true
+    -- use opts = {} for passing setup options
+    -- this is equalent to setup({}) function
+  },
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -313,9 +321,15 @@ km.set('v', '<D-x>', '"+d')
 km.set('', '<D-v>', '"+P')
 km.set('!', '<D-v>', '<C-R>+')
 
+km.set('n', '<S-PageUp>', '<C-U>')
+km.set('n', '<S-PageDown>', '<C-D>')
+
 vim.api.nvim_create_user_command('ZZ', 'xa', {})
 vim.api.nvim_create_user_command('W', 'Gw', {})
 vim.api.nvim_create_user_command('H', 'vert help', {})
+vim.api.nvim_create_user_command('FF', "let @* = expand('%:.')", {})
+vim.api.nvim_create_user_command('LL', "let @* = printf('%s:%d', expand('%:.'), line('.'))", {})
+vim.api.nvim_create_user_command('Gblame', 'Git blame', {})
 
 local function write_with_path()
   os.execute('mkdir -p '..vim.fn.expand'%:h')
@@ -323,6 +337,9 @@ local function write_with_path()
 end
 
 vim.api.nvim_create_user_command('WW', write_with_path, {})
+vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI'}, {
+  command = "if mode() != 'c' | checktime | endif",
+})
 vim.api.nvim_create_autocmd({'FileType'}, {
   pattern = 'help',
   command = 'wincmd L',
@@ -336,8 +353,11 @@ km.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics l
 -- }}}
 
 -- {{{ telescope (fuzzy finder)
+local actions = require 'telescope.actions'
+
 require('telescope').setup {
   defaults = {
+    vimgrep_arguments = { "rg", "--color=never", "--vimgrep" },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -345,6 +365,10 @@ require('telescope').setup {
         ['<C-w>'] = "select_horizontal",
         ['<C-e>'] = "select_default",
         ['<CR>'] = "select_vertical",
+
+        ["<S-Up>"] = actions.cycle_history_prev,
+        ["<S-Down>"] = actions.cycle_history_next,
+
       },
     },
   },
@@ -355,13 +379,17 @@ pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
 local builtin = require 'telescope.builtin'
+
+local function word_grep_string()
+  builtin.grep_string{word_match = "-w"}
+end
 vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[b] Find existing buffers' })
 vim.keymap.set('n', '<leader>g', builtin.git_files, { desc = 'Search [G]it files' })
 vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = '[ ] Search files' })
 vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = '[/] Search by rg' })
 vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>*', builtin.grep_string, { desc = '[*] Search current word' })
+vim.keymap.set('n', '<leader>*', word_grep_string, { desc = '[*] Search current word' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 -- }}}
 
@@ -480,7 +508,6 @@ local servers = {
     },
   },
 
-  ruby_ls = {},
   gopls = {},
 }
 
@@ -532,7 +559,14 @@ end
 
 lspconfig.lexical.setup({})
 
--- vim.lsp.set_log_level("info")
+lspconfig.ruby_ls.setup {
+  on_attach = on_attach,
+  settings = {
+    excluded_patterns = { "**/spec/**/*.rb" },
+  },
+}
+
+-- vim.lsp.set_log_level("debug")
 -- }}}
 
 -- {{{ completion
