@@ -100,6 +100,7 @@ require('lazy').setup({
   'yosssi/vim-ace',
   'equalsraf/neovim-gui-shim',
   'matchit',
+  'levouh/tint.nvim',
 
   -- Detect tabstop and shiftwidth automatically
   -- 'tpope/vim-sleuth',
@@ -276,6 +277,8 @@ ll_solarized.command = { a = { fg = colors.base03, bg = colors.yellow, gui = 'bo
 require('lualine').setup {
   options = { theme = ll_solarized },
 }
+
+require('tint').setup()
 -- }}}
 
 -- {{{ keymaps and commands
