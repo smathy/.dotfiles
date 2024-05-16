@@ -1,8 +1,10 @@
 alias v=nvim-qt
-alias V=sudo\ v
+alias V=sudo\ nvim
 
 alias vz='v ~/.zshrc'
-alias VH='V /etc/hosts'
+alias vp='v ~/.zprofile'
+alias va='v ~/.aliases'
+alias vf='v ~/.functions'
 
 alias lh=~/bin/lh.pl
 
@@ -23,5 +25,9 @@ alias ls="gls --group-directories-first --color=tty"
 
 alias cat=bat
 alias rm="rm -rf"
+
+if [ -f ~/work/.aliases ]; then
+	. ~/work/.aliases
+fi
 
 # vim: ft=zsh

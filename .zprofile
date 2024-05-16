@@ -2,9 +2,13 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export ZSH=$HOME/.oh-my-zsh
 HYPHEN_INSENSITIVE="true"
-plugins=(bundler macos rake ruby gitfast asdf)
+COMPLETION_WAITING_DOTS="true"
+HOMEBREW_AUTO_UPDATE_SECS=86400
+
+plugins=(bundler macos rake ruby gitfast asdf brew)
 
 MANPATH="/usr/local/man"
+FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
 if [ -d /opt/homebrew/opt/coreutils/libexec/gnubin ]; then
   PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
@@ -25,10 +29,23 @@ PATH=$GOPATH/bin:$PATH
 
 PATH="./bin:$HOME/bin:$PATH"
 
-export LDFLAGS="-L/opt/homebrew/opt/postgresql@15/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/postgresql@15/include"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/postgresql@15/lib/pkgconfig"
-
 export REDIS_URL=redis://localhost:6379
 export PGDATABASE=postgres
 export PATH MANPATH
+
+export RUBY_GC_HEAP_INIT_SLOTS=1250000
+export RUBY_HEAP_SLOTS_INCREMENT=100000
+export RUBY_GC_MALLOC_LIMIT=30000000
+export RUBY_HEAP_FREE_MIN=12500
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1.2
+export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.4
+
+# OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES fixes "Incomplete response received from application" error
+# # Might be related to: https://github.com/rails/rails/issues/38560
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+export RAILS_LOG_LEVEL=debug
+export RUBY_YJIT_ENABLE=1
+export NO_COVERAGE=1
+
+eval "$(/opt/homebrew/bin/brew shellenv)"

@@ -1,85 +1,88 @@
 [user]
-  email = jk@radical.gd
-  name = Jason King
+	email = jk@radical.gd
+	name = Jason King
 [github]
-  user = smathy
-  token = 7d698712479c54a6adf168260354e16d
-  ssl = true
+	user = smathy
+	ssl = true
+[includeIf "gitdir:~/work/"]
+	path = ~/work/.gitconfig
+[url "git@github.smathy:smathy/"]
+	insteadOf = git@github.com:smathy/
 [core]
-  excludesfile = ~/.gitignore
-  editor = nvim
-  autocrlf = false
-  whitespace = fix
-  pager = delta
+	excludesfile = ~/.gitignore
+	editor = nvim
+	autocrlf = false
+	whitespace = fix
+	pager = delta
 [color]
-  ui = auto
+	ui = auto
 [alias]
-  co = checkout
-  cc = checkout -
-  cb = checkout -b
-  br = branch
-  ci = commit --allow-empty-message
-  m = checkout master
-  ss = checkout staging
-  dd = checkout develop
-  mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
-  rb = "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
-  rbi = "!git rb -i"
-  rbii = "!git rb -i HEAD~10"
-  rbm = "!git rb master"
-  rba = "!git rb --abort"
-  rbc = "!git rb --continue"
-  rr = reset --hard origin/master
-  d = diff --color-words
-  s = show --color-words
-  sign = commit --amend -sC HEAD
-  amend = commit --amend -C HEAD
-  l = log --graph --date='format:%Y-%m-%d %H:%M:%S' --pretty='format:%ad %C(yellow)%h%Creset %C(blue)%aN%Creset %s%C(yellow)%d%Creset'
-  lc = log --no-merges --graph --pretty='format:%h %s'
-  ll = log --decorate --pretty=fuller --shortstat --abbrev-commit --dirstat
-  la = log --decorate --pretty=fuller --stat --abbrev-commit --name-status
-  lp = log --decorate --pretty=fuller --stat --patch
-  p = format-patch master
-  prr = pull-request
-  st = status -sb
-  cp = cherry-pick
-  up = push
-  upp = push -f
-  down = pull
-  mg = merge --no-ff
-  rc = rebase --continue
-  b = blame --abbrev=6
-  root = !pwd
-  root = !pwd -P
+	alias = !git config -l | rg "^alias"
+	mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
+	amend = commit --amend -C HEAD
+	br = branch
+	cb = co -b
+	cc = co -
+	ci = commit --allow-empty-message
+	co = checkout
+	cp = cherry-pick
+	d = diff --color-words
+	dd = co develop
+	down = pull
+	l = log --graph --date='format:%Y-%m-%d %H:%M:%S' --pretty='format:%ad %C(yellow)%h%Creset %C(blue)%aN%Creset %s%C(yellow)%d%Creset'
+	la = log --decorate --pretty=fuller --stat --abbrev-commit --name-status
+	lc = log --no-merges --graph --pretty='format:%h %s'
+	ll = log --decorate --pretty=fuller --shortstat --abbrev-commit --dirstat
+	lp = log --decorate --pretty=fuller --stat --patch
+	m = co main
+	mg = merge --no-ff
+	p = format-patch main
+	prr = pull-request
+	rb = rebase # "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
+	rba = "!git rb --abort"
+	rbc = "!git rb --continue"
+	rh = "reset --hard"
+	rbi = "!gitrbi"
+	rbii = "!git rb -i HEAD~10"
+	rbm = "!git rb main"
+	rc = rebase --continue
+	rr = reset --hard origin/main
+	s = show --color-words
+	sign = commit --amend -sC HEAD
+	ss = co staging
+	st = status -sb
+	up = push
+	upp = up -f
+	wip = ci -amWIP
 [push]
 	default = current
 [diff]
-  renames = copies
-  colorMoved = default
+	renames = copies
+	colorMoved = default
 [clean]
-  requireForce = false
+	requireForce = false
 [branch]
 	autosetuprebase = always
 	sort = -committerdate
 [hub]
-  protocol = ssh
+	protocol = ssh
 [log]
 	date = iso-local
 [init]
-	defaultBranch = master
+	defaultBranch = main
 
 [interactive]
-  diffFilter = delta --color-only
+	diffFilter = delta --color-only
 [delta]
-  navigate = true    # use n and N to move between diff sections
-  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-  line-numbers = true
-  hyperlinks = true
-  syntax-theme = Solarized (dark)
-  minus-style = red normal
-  plus-style = green normal
+	navigate = true    # use n and N to move between diff sections
+	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+	line-numbers = true
+	hyperlinks = true
+	syntax-theme = Solarized (dark)
+	minus-style = red normal
+	plus-style = green normal
 [merge]
-  conflictstyle = diff3
+	conflictstyle = diff3
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true

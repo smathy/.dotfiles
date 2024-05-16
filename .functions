@@ -34,28 +34,35 @@ function reset_db() {
   done
 }
 
-r() {
+rr() {
   if [[ "$*" == "" ]]; then
     rails routes
   else
-    rails routes | ag $*
+    rails routes | rg $*
   fi
 }
 
 TLAST=
 
 t() {
-  if [[ "$*" == "" ]]; then
-    rails test
-  else
-    TLAST=$*
-    rails test $*
-  fi
+  if [[ "$*" != "" ]]; then
+		TLAST=("$@")
+	fi
+	rspec ${TLAST[@]} 2>/dev/null
 }
 
 tt() {
   echo "t $TLAST"
-  rails test $TLAST
+  rspec $TLAST 2>/dev/null
+}
+
+tr() {
+	if [[ "$*" == "" ]]; then
+		t
+	else
+		echo t $(rg --vimgrep $* spec/**/*_spec.rb | cut -d: -f1-2)
+		t $(rg --vimgrep $* spec/**/*_spec.rb | cut -d: -f1-2)
+	fi
 }
 
 function RM() {

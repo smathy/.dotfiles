@@ -19,8 +19,6 @@ export LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=31;40:cd=31;40
 . ~/.secrets
 . ~/.namedirs
 
-# fpath=(/usr/local/share/zsh-completions $fpath)
-
 setopt no_hist_verify extendedglob
 unsetopt nomatch
 
