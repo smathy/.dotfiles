@@ -19,7 +19,9 @@ set keymap vi-insert
 set keymap vi
 "\C-l": clear-screen
 "\C-a": beginning-of-line
+"<Home>": beginning-of-line
 "\C-e": end-of-line
+"<End>": end-of-line
 "\C-k": kill-line
 "\e[5C": forward-word
 "\e[5D": backward-word

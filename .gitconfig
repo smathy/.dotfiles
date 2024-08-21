@@ -4,10 +4,6 @@
 [github]
 	user = smathy
 	ssl = true
-[includeIf "gitdir:~/work/"]
-	path = ~/work/.gitconfig
-[url "git@github.smathy:smathy/"]
-	insteadOf = git@github.com:smathy/
 [core]
 	excludesfile = ~/.gitignore
 	editor = nvim
@@ -57,8 +53,11 @@
 [push]
 	default = current
 [diff]
-	renames = copies
-	colorMoved = default
+	# renames = copies
+  colorMoved = default
+[diff "rails_credentials"]
+	textconv = rails encrypted:show
+	cachetextconv = false
 [clean]
 	requireForce = false
 [branch]

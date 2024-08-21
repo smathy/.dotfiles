@@ -9,6 +9,7 @@ vim.g.maplocalleader = ' '
 -- vim.g.ruby_host_prog = '~/.asdf/shims/neovim-ruby-host'
 
 opt.scrolloff = 999
+opt.cursorline = true
 opt.smartcase = true
 opt.ignorecase = true
 opt.showmode = false
@@ -25,6 +26,7 @@ opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 bo.autoindent = true
 -- bo.cindent = true
 opt.mousefocus = true
+opt.laststatus = 3
 
 opt.tabstop = 2
 opt.shiftwidth = 0
@@ -99,7 +101,6 @@ require('lazy').setup({
   'tpope/vim-abolish',
   'yosssi/vim-ace',
   'equalsraf/neovim-gui-shim',
-  'matchit',
   'levouh/tint.nvim',
 
   -- Detect tabstop and shiftwidth automatically
@@ -163,13 +164,11 @@ require('lazy').setup({
   },
 
   {
-    'svrana/neosolarized.nvim',
-    dependencies = {
-      'tjdevries/colorbuddy.nvim',
-    },
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'neosolarized'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -182,9 +181,14 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'solarized_dark',
+        theme = 'catppuccin',
         section_separators = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
+      },
+      sections = {
+        lualine_a = {'branch'},
+        lualine_b = {'diff', 'diagnostics'},
+        lualine_c = {'buffers'},
       },
     },
   },
@@ -215,6 +219,8 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+  'nvim-treesitter/nvim-treesitter-context',
+
   'iamcco/markdown-preview.nvim',
 
   'tpope/vim-rails',
@@ -228,53 +234,37 @@ require('lazy').setup({
     -- this is equalent to setup({}) function
   },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require('notify').setup({
+        render = 'compact',
+      })
+    end,
+  },
+
+  {
+    "folke/noice.nvim",
+    config = function()
+      require('noice').setup({})
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+  },
+
+  "sindrets/diffview.nvim",
+
 }, {})
 -- }}}
 
 -- {{{ theme and statusline
-require('neosolarized').setup({ comment_italics = true, background_set = true, })
-
-local colors = {
-  base03  =  '#002b36',
-  base02  =  '#073642',
-  base01  =  '#586e75',
-  base00  =  '#657b83',
-  base0   =  '#839496',
-  base1   =  '#93a1a1',
-  base2   =  '#eee8d5',
-  base3   =  '#fdf6e3',
-  yellow  =  '#b58900',
-  orange  =  '#cb4b16',
-  red     =  '#dc322f',
-  magenta =  '#d33682',
-  violet  =  '#6c71c4',
-  blue    =  '#268bd2',
-  cyan    =  '#2aa198',
-  green   =  '#859900',
-}
-
-local ll_solarized = require'lualine.themes.solarized_dark'
-ll_solarized.normal.b = { fg = colors.base0, bg = colors.base03 }
-ll_solarized.normal.c.bg = colors.base02
-ll_solarized.command = { a = { fg = colors.base03, bg = colors.yellow, gui = 'bold'}}
-
-require('lualine').setup {
-  options = { theme = ll_solarized },
-}
-
 require('tint').setup()
 -- }}}
 
@@ -397,7 +387,7 @@ vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iag
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
-    ensure_installed = "all",
+    ensure_installed = { "ruby", "bash", "sql", "lua", "html", "css", "scss", "diff", "elixir", "eex", "heex", "csv", "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore", "go", "javascript", "jq", "json", "markdown", "markdown_inline", "nginx", "nix", "passwd", "perl", "readline", "regex", "ssh_config", "surface", "terraform", "tmux", "toml", "typescript", "vim", "vimdoc", "xml", "yaml", },
 
     auto_install = false,
 
@@ -559,10 +549,11 @@ end
 
 lspconfig.lexical.setup({})
 
-lspconfig.ruby_ls.setup {
+lspconfig.ruby_lsp.setup {
   on_attach = on_attach,
   settings = {
     excluded_patterns = { "**/spec/**/*.rb" },
+    completion = false,
   },
 }
 
@@ -654,4 +645,5 @@ cmp.setup {
 }
 -- }}}
 
+vim.cmd "hi clear TreesitterContextBottom"
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,10 +1,12 @@
-alias v=nvim-qt
+alias v=vimr
+alias V=sudo\ v
 alias V=sudo\ nvim
 
 alias vz='v ~/.zshrc'
 alias vp='v ~/.zprofile'
 alias va='v ~/.aliases'
 alias vf='v ~/.functions'
+alias VH='V /etc/hosts'
 
 alias lh=~/bin/lh.pl
 
@@ -21,13 +23,13 @@ alias cldns="sudo killall -HUP mDNSResponder"
 alias b="say -v fred beep beep"
 #alias k="java -jar $(brew list kotlin | head -1 | cut -d/ -f1-6)/libexec/lib/kotlin-compiler.jar -script"
 
-alias ls="gls --group-directories-first --color=tty"
+alias ls="eza --group-directories-first --icons=auto"
+alias l=ls
+alias ll="ls -l --group-directories-first --smart-group"
+alias la="ll -a"
+alias laa="la -a"
 
 alias cat=bat
 alias rm="rm -rf"
-
-if [ -f ~/work/.aliases ]; then
-	. ~/work/.aliases
-fi
 
 # vim: ft=zsh
