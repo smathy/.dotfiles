@@ -32,7 +32,7 @@ alias laa="la -a"
 alias cat=bat
 alias rm="rm -rf"
 
-alias rg="rg -M $(($COLUMNS - 28))"
+alias rg='rg -M $(($COLUMNS - 28))'
 alias rgg="rg -M0"
 
 # vim: ft=zsh
