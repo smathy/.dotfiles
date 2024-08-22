@@ -8,10 +8,6 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_DIRTY=" ~"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-# See http://geoff.greer.fm/lscolors/
-export LSCOLORS="exfxcxdxbxbxbxbxbxbxbx"
-export LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=31;40:cd=31;40:su=31;40:sg=31;40:tw=31;40:ow=31;40:"
-
 . ~/.aliases
 . ~/.functions
 . ~/.dotfiles/.pop.sh
@@ -21,9 +17,6 @@ export LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=31;40:cd=31;40
 
 setopt no_hist_verify extendedglob
 unsetopt nomatch
-
-eval "$(dircolors ~/.dircolors)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 export LESS=$LESS\ -ifR
 
@@ -35,6 +28,14 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # export ANDROID_HOME=$HOME/Library/Android/sdk
 # export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+
+if [ -f ~/work/.aliases ]; then
+	. ~/work/.aliases
+fi
+
+if [ -f ~/work/.functions ]; then
+	. ~/work/.functions
+fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
