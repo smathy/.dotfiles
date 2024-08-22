@@ -56,7 +56,7 @@ tt() {
   rspec $TLAST 2>/dev/null
 }
 
-tr() {
+trg() {
 	if [[ "$*" == "" ]]; then
 		t
 	else
