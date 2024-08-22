@@ -101,7 +101,6 @@ require('lazy').setup({
   'tpope/vim-abolish',
   'yosssi/vim-ace',
   'equalsraf/neovim-gui-shim',
-  'levouh/tint.nvim',
 
   -- Detect tabstop and shiftwidth automatically
   -- 'tpope/vim-sleuth',
@@ -232,6 +231,18 @@ require('lazy').setup({
     config = true
     -- use opts = {} for passing setup options
     -- this is equalent to setup({}) function
+  },
+
+  {
+    'levouh/tint.nvim',
+    config = function()
+      require("tint").setup({
+        transforms = {
+          require("tint.transforms").tint_with_threshold(-100, "#1C1C1C", 150),
+          require("tint.transforms").saturate(0.5),
+        }
+      })
+    end,
   },
 
   {
