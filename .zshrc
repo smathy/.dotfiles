@@ -1,7 +1,7 @@
 if [ $UID -eq 0 ]; then NCOLOR="red"; PR="#"; else NCOLOR="yellow"; PR="$" fi
 
 PROMPT='%F{$NCOLOR}%~ %f'
-RPROMPT='%F{$NCOLOR}%p%F{green}$(current_git_branch)%F{cyan}$(current_git_hash)%F{red}$(current_git_stash)%f %*'
+RPROMPT='%F{$NCOLOR}%p%F{#74c7ec}$(current_git_branch)%F{green}$(current_git_hash)%F{red}$(current_git_stash)%f %*'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="git:"
 ZSH_THEME_GIT_PROMPT_SUFFIX=""

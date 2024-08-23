@@ -325,6 +325,13 @@ km.set('!', '<D-v>', '<C-R>+')
 km.set('n', '<S-PageUp>', '<C-U>')
 km.set('n', '<S-PageDown>', '<C-D>')
 
+km.set('n', '<M-D-Right>', 'w')
+km.set('n', '<M-D-Left>', 'W')
+km.set('n', '<M-D-Up>', '<Up>')
+km.set('n', '<M-D-Down>', '<Down>')
+
+km.set('n', '', 'p')
+
 vim.api.nvim_create_user_command('ZZ', 'xa', {})
 vim.api.nvim_create_user_command('W', 'Gw', {})
 vim.api.nvim_create_user_command('H', 'vert help', {})
