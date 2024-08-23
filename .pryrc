@@ -44,8 +44,13 @@ Pry.config.prompt = Pry::Prompt.new(
   "mine",
   "My custom prompt",
   [ proc { |obj, nest_level, _|
-    nest_string = (nest_level > 0 ? ":#{nest_level}" : '')
-    "\e[33m#{obj}#{nest_string}>\e[0m "
+    nest_string = nest_level > 0 ? ":#{nest_level}" : ""
+    obj_string = obj.to_s + nest_string + " "
+    obj_string = "" if obj_string == "main "
+
+    cgb = `git rev-parse --abbrev-ref HEAD`.chomp
+
+    "\e[31m#{obj_string}\e[32m#{cgb} ⟩\e[0m "
   }]
 )
 
