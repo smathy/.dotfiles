@@ -29,7 +29,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # export ANDROID_HOME=$HOME/Library/Android/sdk
 # export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
-sauces=(./.aliases "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$HOME/.iterm2_shell_integration.zsh" "$HOME/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc")
+sauces=(./.aliases ../.aliases "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$HOME/.iterm2_shell_integration.zsh" "$HOME/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc")
 for f in $sauces; do
 	[ -f $f ] && . $f
 done
