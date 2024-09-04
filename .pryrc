@@ -50,10 +50,21 @@ Pry.config.prompt = Pry::Prompt.new(
 
     cgb = `git rev-parse --abbrev-ref HEAD`.chomp
 
-    "\e[31m#{obj_string}\e[32m#{cgb} ⟩\e[0m "
+    color =
+      case Rails.env
+      when "development"
+        "32"
+      when "test"
+        "34"
+      else
+        "31"
+      end
+
+
+    "\e[#{color}m#{obj_string}#{cgb} ⟩\e[0m "
   }]
 )
 
 Pry.config.output_prefix = ""
 
-# vim: set ft=ruby :
+# vim: ft=ruby

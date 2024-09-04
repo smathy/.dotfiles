@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
+vim=nvim-qt
+pipe=./.nvim.pipe
 line=""
 args=("$@")
 re=':[0-9]+$'
@@ -8,10 +10,19 @@ if [[ ${#args[@]} == 1 && ${args[0]} =~ $re ]]; then
   args=("${args[0]:0:$pos-1}")
 fi
 
-if [[ "${args[0]}" == "" ]]; then
-  gvim
+if [[ "$#" -eq 0 ]]; then
+	$vim
 elif [[ "${args[0]}" == "-" ]]; then
-  gvim -
+  nvim -
 else
-  gvim --servername $PWD --remote-tab $line "${args[@]}" >/dev/null 2>&1
+	if [[ -S $pipe ]]; then
+		$vim -- --server $pipe --remote-send ":vs $line ${args[@]}<CR>"
+		osascript <<- EOI
+			tell application "System Events" to tell process "nvim-qt"
+				set frontmost to true
+			end tell
+		EOI
+	else
+		$vim $line "${args[@]}" -- --listen $pipe
+	fi
 fi

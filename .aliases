@@ -1,5 +1,3 @@
-alias v=vimr
-alias V=sudo\ v
 alias V=sudo\ nvim
 
 alias vz='v ~/.zshrc'
@@ -34,5 +32,7 @@ alias rm="rm -rf"
 
 alias rg='rg -M $(($COLUMNS - 28))'
 alias rgg="rg -M0"
+
+alias mkdir='mkdir -p'
 
 # vim: ft=zsh

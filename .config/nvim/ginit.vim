@@ -8,7 +8,7 @@ set columns=272
 " Set Editor Font
 if exists(':GuiFont')
   " Use GuiFont! to ignore font errors
-  GuiFont AnonymicePro Nerd Font:h13
+  GuiFont JetBrainsMono Nerd Font:h12
 endif
 
 " Disable GUI Tabline
@@ -30,7 +30,7 @@ if exists(':GuiClipboard')
   GuiClipboard
 endif
 
-hi Cursor gui=NONE guifg=orange guibg=NONE
-set guicursor=a:Cursor,i:ver25
+hi Cursor gui=NONE guibg=orange guifg=NONE
+set guicursor=a:Cursor-blinkwait500-blinkoff500-blinkon500,i:ver25
 
 set selectmode+=mouse

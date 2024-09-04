@@ -27,6 +27,8 @@ bo.autoindent = true
 -- bo.cindent = true
 opt.mousefocus = true
 opt.laststatus = 3
+opt.titlestring = '%(  %{substitute(expand("%:~"), "/work/", "", "")}%)'
+
 
 opt.tabstop = 2
 opt.shiftwidth = 0
@@ -187,7 +189,10 @@ require('lazy').setup({
       sections = {
         lualine_a = {'branch'},
         lualine_b = {'diff', 'diagnostics'},
-        lualine_c = {'buffers'},
+        lualine_c = {{
+          'buffers',
+          mode = 4,
+        }},
       },
     },
   },
@@ -298,6 +303,9 @@ km.set('', '<C-]>', 'g<C-]>')
 km.set('', 'g<C-]>', '<C-]>')
 km.set('', '<C-W><C-]>', '<C-W>g<C-]>')
 km.set('', '<C-W>g<C-]>', '<C-W><C-]>')
+
+km.set('', '<C-W><C-^>', '<C-W><C-V><C-^>')
+km.set('', '<C-W>^', '<C-W><C-V>^')
 
 km.set('', '<C-W><C-V>f', ':vert winc f<CR>')
 km.set('', '<C-W>vf', ':vert winc f<CR>')

@@ -9,7 +9,6 @@ ZSH_THEME_GIT_PROMPT_DIRTY=" ~"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 . ~/.aliases
-. ~/.functions
 . ~/.dotfiles/.pop.sh
 . ~/.zle
 . ~/.secrets
@@ -33,3 +32,5 @@ sauces=(./.aliases ../.aliases "$(brew --prefix)/share/zsh-syntax-highlighting/z
 for f in $sauces; do
 	[ -f $f ] && . $f
 done
+
+. ~/.functions
