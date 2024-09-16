@@ -61,7 +61,7 @@ Pry.config.prompt = Pry::Prompt.new(
       end
 
 
-    "\e[#{color}m#{obj_string}#{cgb} ⟩\e[0m "
+    "\e[34m#{obj_string}\e[#{color}m#{cgb} ⟩\e[0m "
   }]
 )
 

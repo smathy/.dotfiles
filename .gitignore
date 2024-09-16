@@ -11,3 +11,4 @@ bin/dbsync
 /node_modules/
 /*.info
 /venv
+/.config/iterm2

@@ -276,6 +276,12 @@ require('lazy').setup({
   },
 
   "sindrets/diffview.nvim",
+  {
+    "RaafatTurki/hex.nvim",
+    config = function()
+      require 'hex'.setup()
+    end,
+  }
 
 }, {})
 -- }}}
@@ -577,9 +583,10 @@ lspconfig.lexical.setup({})
 
 lspconfig.ruby_lsp.setup {
   on_attach = on_attach,
-  settings = {
-    excluded_patterns = { "**/spec/**/*.rb" },
-    completion = false,
+  init_options = {
+    indexing = {
+      excluded_patterns = { "**/spec/**/*.rb", "CHEETO-*/**/*", "APPS-*/**/*", "MDF-*/**/*", "NUM-*/**/*", "RACH-*/**/*", "RELEASE-*/**/*" },
+    },
   },
 }
 
