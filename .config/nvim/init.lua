@@ -317,6 +317,8 @@ km.set('', '<C-W>g<C-]>', '<C-W><C-]>')
 km.set('', '<C-W><C-^>', '<C-W><C-V><C-^>')
 km.set('', '<C-W>^', '<C-W><C-V>^')
 
+km.set('n', '^', ':<C-U>vs #<C-R>=v:count<CR><CR>')
+
 km.set('', '<C-W><C-V>f', ':vert winc f<CR>')
 km.set('', '<C-W>vf', ':vert winc f<CR>')
 km.set('', ']]', '][')

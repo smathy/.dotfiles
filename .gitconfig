@@ -13,7 +13,7 @@
 [color]
 	ui = auto
 [alias]
-	alias = !git config -l | rg "^alias"
+	alias = !git config -l | rg ^alias
 	mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
 	amend = commit --amend -C HEAD
 	br = branch
@@ -30,19 +30,16 @@
 	lc = log --no-merges --graph --pretty='format:%h %s'
 	ll = log --decorate --pretty=fuller --shortstat --abbrev-commit --dirstat
 	lp = log --decorate --pretty=fuller --stat --patch
-	m = co main
+	m = co master
 	mg = merge --no-ff
-	p = format-patch main
 	prr = pull-request
 	rb = rebase # "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
-	rba = "!git rb --abort"
-	rbc = "!git rb --continue"
-	rh = "reset --hard"
-	rbi = "!gitrbi"
-	rbii = "!git rb -i HEAD~10"
-	rbm = "!git rb main"
-	rc = rebase --continue
-	rr = reset --hard origin/main
+	rba = !git rb --abort
+	rbc = !git rb --continue
+	rh = reset --hard
+	rbi = !gitrbi
+	rbii = !git rb -i HEAD~10
+	rbm = !git rb master
 	s = show --color-words
 	sign = commit --amend -sC HEAD
 	ss = co staging
