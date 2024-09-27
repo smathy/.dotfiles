@@ -30,7 +30,6 @@ PATH=$GOPATH/bin:$PATH
 
 PATH="./bin:$HOME/bin:$PATH"
 
-export REDIS_URL=redis://localhost:6379
 export PGDATABASE=postgres
 export PATH MANPATH
 

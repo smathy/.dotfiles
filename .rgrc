@@ -9,8 +9,6 @@
 --glob=!android/app/src/main/assets/index.android.bundle
 --glob=!Library
 --glob=!data
---glob=!spec
---glob=!tests
 --glob=!archives
 --type-not=svg
 --max-columns-preview

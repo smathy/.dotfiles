@@ -215,6 +215,11 @@ require('lazy').setup({
   },
 
   {
+    'benfowler/telescope-luasnip.nvim',
+    module = "telescope._extensions.luasnip",
+  },
+
+  {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
@@ -253,6 +258,7 @@ require('lazy').setup({
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
   },
 
   {
@@ -378,12 +384,19 @@ km.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic 
 km.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 km.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 km.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+-- Todo keymaps
+local tc = require 'todo-comments'
+km.set("n", "]t", function() tc.jump_next() end, { desc = "Next todo comment" })
+km.set("n", "[t", function() tc.jump_prev() end, { desc = "Previous todo comment" })
+
 -- }}}
 
--- {{{ telescope (fuzzy finder)
+-- {{{ telescope extensions (fzf, luasnip, etc)
 local actions = require 'telescope.actions'
 
-require('telescope').setup {
+local telescope = require('telescope')
+telescope.setup {
   defaults = {
     vimgrep_arguments = { "rg", "--color=never", "--vimgrep" },
     mappings = {
@@ -402,8 +415,8 @@ require('telescope').setup {
   },
 }
 
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
+pcall(telescope.load_extension, 'fzf')
+pcall(telescope.load_extension, 'luasnip')
 
 -- See `:help telescope.builtin`
 local builtin = require 'telescope.builtin'
@@ -591,7 +604,7 @@ lspconfig.ruby_lsp.setup {
   on_attach = on_attach,
   init_options = {
     indexing = {
-      excluded_patterns = { "**/spec/**/*.rb", "CHEETO-*/**/*", "APPS-*/**/*", "MDF-*/**/*", "NUM-*/**/*", "RACH-*/**/*", "RELEASE-*/**/*" },
+      excluded_patterns = { "CHEETO-*/**/*", "APPS-*/**/*", "MDF-*/**/*", "NUM-*/**/*", "RACH-*/**/*", "RELEASE-*/**/*" },
     },
   },
 }
@@ -602,7 +615,9 @@ lspconfig.ruby_lsp.setup {
 -- {{{ completion
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
+local luasnip_loader = require 'luasnip.loaders.from_vscode'
+luasnip_loader.lazy_load({ paths = "./snippets" })
+luasnip_loader.lazy_load()
 luasnip.config.setup {}
 
 local lspkind = require('lspkind')
@@ -644,6 +659,7 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp' },
+    { name = 'luasnip' },
   },
   window = {
     completion = {

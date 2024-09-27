@@ -65,7 +65,7 @@
 [log]
 	date = iso-local
 [init]
-	defaultBranch = main
+	defaultBranch = master
 
 [interactive]
 	diffFilter = delta --color-only

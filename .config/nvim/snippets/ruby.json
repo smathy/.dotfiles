@@ -1,0 +1,54 @@
+{
+    "Insert require": {
+        "prefix": "req",
+        "body": "require \"${1}\"$0"
+    },
+    "Insert require_relative": {
+        "prefix": "reqr",
+        "body": "require_relative \"${1}\"$0"
+    },
+    "Insert byebug call": {
+        "prefix": "bye",
+        "body": "require \"byebug\"; byebug"
+    },
+    "Insert debug call": {
+        "prefix": "debug",
+        "body": "require \"debug\"; debugger"
+    },
+    "Insert pry call": {
+        "prefix": "pry",
+        "body": "require \"pry\"; binding.pry"
+    },
+    "Insert context block": {
+        "prefix": "cont",
+        "body": ["context \"${1:context}\" do", "\t$0", "end"]
+    },
+    "Insert describe class": {
+        "prefix": "desc",
+        "body": ["describe \"${1:description}\" do", "\t$0", "end"]
+    },
+    "Insert describe block": {
+        "prefix": "descm",
+        "body": [
+            "describe \"${1:#method}\" do",
+            "\t${0:pending \"Not implemented\"}",
+            "end"
+        ]
+    },
+    "Insert shared_examples": {
+        "prefix": "shared",
+        "body": "shared_examples \"${0:shared examples name}\""
+    },
+    "Insert it_behaves_like": {
+        "prefix": "ibl",
+        "body": "it_behaves_like \"${0:shared examples name}\""
+    },
+    "Insert it is_expected block": {
+        "prefix": "iti",
+        "body": ["it { is_expected.to $0 }"]
+    },
+    "Insert it block": {
+        "prefix": "it",
+        "body": ["it \"${1:spec_name}\" do", "\t$0", "end"]
+    }
+}
