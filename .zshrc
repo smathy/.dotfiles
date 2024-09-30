@@ -33,4 +33,6 @@ for f in $sauces; do
 	[ -f $f ] && . $f
 done
 
+. <(fzf --zsh)
+
 . ~/.functions
