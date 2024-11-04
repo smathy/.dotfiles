@@ -208,6 +208,10 @@ require('lazy').setup({
         end,
       },
       'onsails/lspkind.nvim',
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim" ,
+        version = "^1.0.0",
+      },
     },
   },
 
@@ -535,6 +539,8 @@ km.set("n", "[t", function() tc.jump_prev() end, { desc = "Previous todo comment
 local actions = require 'telescope.actions'
 
 local telescope = require('telescope')
+local lga_actions = require"telescope-live-grep-args.actions"
+
 telescope.setup {
   defaults = {
     vimgrep_arguments = { "rg", "--color=never", "--vimgrep" },
@@ -552,22 +558,44 @@ telescope.setup {
       },
     },
   },
+  extensions = {
+    live_grep_args = {
+      auto_quoting = true, -- enable/disable auto-quoting
+      -- define mappings, e.g.
+      mappings = { -- extend mappings
+        i = {
+          ["<C-w>"] = lga_actions.quote_prompt({ postfix = " -w"}),
+          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --glob !/spec* --glob !/tests" }),
+          -- freeze the current list and start a fuzzy search in the frozen list
+          ["<C-space>"] = actions.to_fuzzy_refine,
+        },
+      },
+      -- ... also accepts theme settings, for example:
+      -- theme = "dropdown", -- use dropdown theme
+      -- theme = { }, -- use own theme spec
+      -- layout_config = { mirror=true }, -- mirror preview pane
+    },
+  },
 }
 
 pcall(telescope.load_extension, 'fzf')
 pcall(telescope.load_extension, 'luasnip')
+pcall(telescope.load_extension, 'live_grep_args')
 
 -- See `:help telescope.builtin`
 local builtin = require 'telescope.builtin'
+local lga = telescope.extensions.live_grep_args
+local lga_shortcuts = require"telescope-live-grep-args.shortcuts"
 
 local function word_grep_string()
-  builtin.grep_string{word_match = "-w"}
+  lga_shortcuts.grep_word_under_cursor{postfix = "", quote = false}
 end
+
 vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[b] Find existing buffers' })
 vim.keymap.set('n', '<leader>g', builtin.git_files, { desc = 'Search [G]it files' })
 vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = '[ ] Search files' })
-vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = '[/] Search by rg' })
+vim.keymap.set('n', '<leader>/', lga.live_grep_args, { desc = '[/] Search by rg' })
 vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>*', word_grep_string, { desc = '[*] Search current word' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
@@ -602,6 +630,8 @@ vim.defer_fn(function()
           ['ia'] = '@parameter.inner',
           ['af'] = '@function.outer',
           ['if'] = '@function.inner',
+          ['ab'] = '@block.outer',
+          ['ib'] = '@block.inner',
           ['ac'] = '@class.outer',
           ['ic'] = '@class.inner',
         },
@@ -611,19 +641,19 @@ vim.defer_fn(function()
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
+          [']c'] = '@class.outer',
         },
         goto_next_end = {
           [']M'] = '@function.outer',
-          [']['] = '@class.outer',
+          [']C'] = '@class.outer',
         },
         goto_previous_start = {
           ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
+          ['[c'] = '@class.outer',
         },
         goto_previous_end = {
           ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
+          ['[C'] = '@class.outer',
         },
       },
       swap = {

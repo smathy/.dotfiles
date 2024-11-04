@@ -1,0 +1,29 @@
+$env
+ls
+ls | sort-by modified
+which nu
+cat /etc/shells
+V /etc/shells
+sudo nvim /etc/shells
+config nu
+$env.EDITOR
+config nu
+config env
+config load
+config reset 
+config env
+config nu
+ll
+l
+ld
+ls
+work
+./work
+~snug
+~junp
+~juno
+cd ~juno
+cd work/juno/
+ll
+cd
+work/juno
