@@ -189,6 +189,7 @@ require('lazy').setup({
         lualine_c = {{
           'buffers',
           mode = 4,
+          symbols = { modified = ' ' },
         }},
       },
     },
