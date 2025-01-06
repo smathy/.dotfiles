@@ -5,7 +5,7 @@ HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 HOMEBREW_AUTO_UPDATE_SECS=86400
 
-plugins=(bundler macos rake ruby gitfast asdf brew direnv)
+plugins=(bundler macos rake ruby gitfast brew direnv)
 
 MANPATH="/usr/local/man"
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
@@ -21,12 +21,14 @@ if [ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin/ ]; then
 fi
 
 PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-source $ZSH/oh-my-zsh.sh
+. $ZSH/oh-my-zsh.sh
 
 export GOPATH=~/work/go
 PATH=$GOPATH/bin:$PATH
+
+. <(mise activate zsh)
+. <(mise activate --shims)
 
 PATH="./bin:$HOME/bin:$PATH"
 
@@ -39,6 +41,7 @@ export RUBY_GC_MALLOC_LIMIT=30000000
 export RUBY_HEAP_FREE_MIN=12500
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1.2
 export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.4
+export RUBYOPT=--enable-frozen-string-literal
 
 # OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES fixes "Incomplete response received from application" error
 # # Might be related to: https://github.com/rails/rails/issues/38560

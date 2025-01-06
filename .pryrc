@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Pry::Commands.block_command '!!' do
   Rails.application.reloader.reload!
 end  

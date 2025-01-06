@@ -1,4 +1,4 @@
-%w[slim-rails rabl-rails argon2].each do |gem|
+%w[slim-rails argon2].each do |gem|
   gem "#{gem}"
 end
 
@@ -6,8 +6,9 @@ gem_group :development do
   gem "simplecov"
   gem "pry-rails"
   gem "better_errors"
+  gem "ruby-lsp"
   gem "binding_of_caller"
-  gem "html2slim"
+  gem "html2slim", github: "slim-template/html2slim"
 end
 
 %w[web-console jbuilder sdoc].each do |gem|
@@ -15,10 +16,8 @@ end
 end
 
 after_bundle do
-  # run %{rails g simple_form:install --force}
-  run %{erb2slim app/views/layouts/application.html.erb}
-  run %{rm app/views/layouts/application.html.erb}
-  git :init
+  run %{bundle binstubs html2slim}
+  run %{for f in app/views/layouts/*.html.erb; do erb2slim -d $f; done}
   git add: '.'
   git commit: %{ -m init }
 end
