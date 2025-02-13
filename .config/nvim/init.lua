@@ -299,11 +299,9 @@ require('lazy').setup({
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
       dashboard = { enabled = true },
-      explorer = { enabled = true },
       input = { enabled = true },
       notifier = {
         enabled = true,
@@ -313,7 +311,6 @@ require('lazy').setup({
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
-      statuscolumn = { enabled = true },
       words = { enabled = true },
       styles = {
         notification = {
@@ -385,8 +382,6 @@ require('lazy').setup({
       { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
       { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
       { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
-      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-      { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
       { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
       { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
@@ -394,24 +389,6 @@ require('lazy').setup({
       { "<c-_>",      function() Snacks.terminal() end, desc = "which_key_ignore" },
       { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
       { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
-      {
-        "<leader>N",
-        desc = "Neovim News",
-        function()
-          Snacks.win({
-            file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-            width = 0.6,
-            height = 0.6,
-            wo = {
-              spell = false,
-              wrap = false,
-              signcolumn = "yes",
-              statuscolumn = " ",
-              conceallevel = 3,
-            },
-          })
-        end,
-      }
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
@@ -468,6 +445,21 @@ require('lazy').setup({
     'MeanderingProgrammer/render-markdown.nvim',
     opts = {},
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+  },
+
+  {
+    "Funk66/jira.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("jira").setup()
+    end,
+    cond = function()
+      return vim.env.JIRA_API_TOKEN ~= nil
+    end,
+    keys = {
+      { "<leader>jv", ":JiraView<cr>", desc = "View Jira issue", silent = true },
+      { "<leader>jo", ":JiraOpen<cr>", desc = "Open Jira issue in browser", silent = true },
+    },
   },
 }, {})
 -- }}}
@@ -554,6 +546,7 @@ vim.api.nvim_create_autocmd({'FileType'}, {
   pattern = 'help',
   command = 'wincmd L',
 })
+vim.api.nvim_create_autocmd({'BufEnter'}, { callback = function() vim.diagnostic.disable() end })
 
 -- Diagnostic keymaps
 km.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -624,14 +617,14 @@ local function word_grep_string()
   lga_shortcuts.grep_word_under_cursor{postfix = "", quote = false}
 end
 
-vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[b] Find existing buffers' })
-vim.keymap.set('n', '<leader>g', builtin.git_files, { desc = 'Search [G]it files' })
-vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = '[ ] Search files' })
-vim.keymap.set('n', '<leader>/', lga.live_grep_args, { desc = '[/] Search by rg' })
-vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>*', word_grep_string, { desc = '[*] Search current word' })
-vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+-- vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
+-- vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[b] Find existing buffers' })
+-- vim.keymap.set('n', '<leader>g', builtin.git_files, { desc = 'Search [G]it files' })
+-- vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = '[ ] Search files' })
+-- vim.keymap.set('n', '<leader>/', lga.live_grep_args, { desc = '[/] Search by rg' })
+-- vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+-- vim.keymap.set('n', '<leader>*', word_grep_string, { desc = '[*] Search current word' })
+-- vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 -- }}}
 
 -- {{{ treesitter (syntax highlighting)
@@ -719,9 +712,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -750,7 +740,7 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
-      diagnostics = { disable = { 'missing-fields' } },
+      diagnostics = { globals = { "vim", "Snacks" }, disable = { 'missing-fields' } },
     },
   },
 

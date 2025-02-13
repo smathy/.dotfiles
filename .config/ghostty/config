@@ -18,3 +18,6 @@ keybind = cmd+right=next_tab
 keybind = cmd+left=previous_tab
 keybind = cmd+shift+right=move_tab:1
 keybind = cmd+shift+left=move_tab:-1
+
+keybind = page_up=scroll_page_up
+keybind = page_down=scroll_page_down
