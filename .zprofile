@@ -5,7 +5,7 @@ HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 HOMEBREW_AUTO_UPDATE_SECS=86400
 
-plugins=(bundler macos rake ruby gitfast brew direnv)
+plugins=(bundler macos rake ruby gitfast asdf brew direnv)
 
 MANPATH="/usr/local/man"
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
@@ -21,14 +21,12 @@ if [ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin/ ]; then
 fi
 
 PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-. $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 export GOPATH=~/work/go
 PATH=$GOPATH/bin:$PATH
-
-. <(mise activate zsh)
-. <(mise activate --shims)
 
 PATH="./bin:$HOME/bin:$PATH"
 

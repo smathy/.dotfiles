@@ -32,6 +32,7 @@
 	lp = log --decorate --pretty=fuller --stat --patch
 	m = co master
 	mg = merge --no-ff
+	names = show --pretty= --name-only
 	prr = pull-request
 	rb = rebase # "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
 	rba = !git rb --abort

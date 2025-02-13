@@ -12,3 +12,4 @@
 --glob=!archives
 --type-not=svg
 --max-columns-preview
+--multiline-dotall
