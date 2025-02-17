@@ -23,9 +23,9 @@ alias b="say -v fred beep beep"
 
 alias ls="eza --group-directories-first --icons=auto"
 alias l=ls
-alias ll="ls -l --group-directories-first --smart-group"
+alias ll="l -l --smart-group"
 alias la="ll -a"
-alias laa="la -a"
+alias lt="ll -T"
 
 alias cat=bat
 alias rm="rm -rf"

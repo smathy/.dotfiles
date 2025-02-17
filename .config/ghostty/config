@@ -21,3 +21,5 @@ keybind = cmd+shift+left=move_tab:-1
 
 keybind = page_up=scroll_page_up
 keybind = page_down=scroll_page_down
+
+keybind = cmd+alt+equal=equalize_splits
