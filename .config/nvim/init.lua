@@ -307,7 +307,19 @@ require('lazy').setup({
         enabled = true,
         timeout = 3000,
       },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        win = {
+          -- input window
+          input = {
+            keys = {
+              ["<space><space>"] = { "confirm", mode = { "n", "i" } },
+              ["<CR>"] = { "edit_vsplit", mode = { "n", "i" } },
+              ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+            },
+          },
+        },
+      },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
