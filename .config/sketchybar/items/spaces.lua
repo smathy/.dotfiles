@@ -27,9 +27,7 @@ for i = 1, 10, 1 do
     padding_left = 1,
     background = {
       color = colors.bg1,
-      border_width = 1,
       height = 26,
-      border_color = colors.black,
     },
     popup = { background = { border_width = 5, border_color = colors.black } }
   })
@@ -40,9 +38,7 @@ for i = 1, 10, 1 do
   local space_bracket = sbar.add("bracket", { space.name }, {
     background = {
       color = colors.transparent,
-      border_color = colors.bg2,
       height = 28,
-      border_width = 2
     }
   })
 
