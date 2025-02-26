@@ -124,51 +124,6 @@ require('lazy').setup({
   },
 
   {
-    "garymjr/nvim-snippets",
-    dependencies = { "rafamadriz/friendly-snippets", "hrsh7th/nvim-cmp" },
-    keys = {
-      {
-        "<Tab>",
-        function()
-          if vim.snippet.active({ direction = 1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(1)
-            end)
-            return
-          end
-          return "<Tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = "i",
-      },
-      {
-        "<Tab>",
-        function()
-          vim.schedule(function()
-            vim.snippet.jump(1)
-          end)
-        end,
-        expr = true,
-        silent = true,
-        mode = "s",
-      },
-      {
-        "<S-Tab>",
-        function()
-          if vim.snippet.active({ direction = -1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(-1)
-            end)
-            return
-          end
-          return "<S-Tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = { "i", "s" },
-      },
-    },
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -246,6 +201,19 @@ require('lazy').setup({
         version = "^1.0.0",
       },
     },
+  },
+
+  {
+    "L3MON4D3/LuaSnip",
+    build = "make install_jsregexp",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      local ls = require("luasnip")
+
+      vim.keymap.set({"i", "s"}, "<TAB>", function() return ls.expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<TAB>" end, {expr=true})
+    end,
   },
 
   {
@@ -561,6 +529,10 @@ vim.api.nvim_create_autocmd({'FileType'}, {
   command = 'wincmd L',
 })
 vim.api.nvim_create_autocmd({'BufEnter'}, { callback = function() vim.diagnostic.disable() end })
+vim.api.nvim_create_autocmd({'BufNewFile'}, {
+  pattern = "*.rb",
+  command = "0r "..vim.fn.stdpath'config'.."/skel.rb",
+})
 
 -- Diagnostic keymaps
 km.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
