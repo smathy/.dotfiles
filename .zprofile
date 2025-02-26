@@ -21,7 +21,6 @@ if [ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin/ ]; then
 fi
 
 PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 source $ZSH/oh-my-zsh.sh
 
