@@ -29,7 +29,6 @@ opt.mousefocus = true
 opt.laststatus = 3
 opt.titlestring = '%(  %{substitute(expand("%:~"), "/work/", "", "")}%)'
 
-
 opt.tabstop = 2
 opt.shiftwidth = 0
 -- opt.expandtab = true
@@ -75,7 +74,14 @@ opt.shortmess:append "S"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.termguicolors = true
+opt.winblend = 70
+
+opt.termguicolors = true
+
+opt.guifont = "JetBrainsMono Nerd Font:h12"
+opt.guicursor= { "a:Cursor-blinkwait500-blinkoff500-blinkon500", "i:ver25" }
+
+opt.selectmode:append "mouse"
 -- }}}
 
 -- {{{ lazy
@@ -127,7 +133,15 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  {
+    'folke/which-key.nvim',
+    opts = {
+      spec = {
+        { "<leader>s", group = "search" },
+      }
+    },
+  },
+
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -468,7 +482,7 @@ km.set('', 'g<C-]>', '<C-]>')
 km.set('', '<C-W><C-]>', '<C-W>g<C-]>')
 km.set('', '<C-W>g<C-]>', '<C-W><C-]>')
 
-km.set('', '<D-≠>', '<C-W>=')
+km.set('', '<D-=>', '<C-W>=')
 
 km.set('', '<C-W><C-^>', '<C-W><C-V><C-^>')
 km.set('', '<C-W>^', '<C-W><C-V>^')
@@ -794,5 +808,6 @@ lspconfig.ruby_lsp.setup {
 
 -- }}}
 
-vim.cmd "hi clear TreesitterContextBottom"
+vim.api.nvim_set_hl(0, "TreesitterContextBottom", {})
+vim.api.nvim_set_hl(0, "Cursor", { bg="orange" })
 -- vim: ts=2 sts=2 sw=2 et

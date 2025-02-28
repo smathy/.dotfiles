@@ -1,5 +1,5 @@
 #!/bin/zsh
-vim=nvim-qt
+vim=neovide
 pipe=./.nvim.pipe
 line=""
 args=("$@")
@@ -16,10 +16,12 @@ elif [[ "${args[0]}" == "-" ]]; then
   nvim -
 else
 	if [[ -S $pipe ]]; then
-		$vim -- --server $pipe --remote-send ":vs $line ${args[@]}<CR>"
+		nvim --server $pipe --remote-send ":vs $line ${args[@]}<CR>"
 		osascript <<- EOI
-			tell application "System Events" to tell process "nvim-qt"
+			tell application "System Events" to tell process "neovide"
 				set frontmost to true
+				windows where title contains "$(print -rD $PWD)"
+				if result is not {} then perform action "AXRaise" of item 1 of result
 			end tell
 		EOI
 	else
