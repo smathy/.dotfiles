@@ -224,8 +224,8 @@ require('lazy').setup({
     build = "make install_jsregexp",
     dependencies = { "rafamadriz/friendly-snippets" },
     config = function()
+      require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippet_overrides" }})
       require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_vscode").lazy_load({ path = vim.fn.stdpath'config'.."/snippet_overrides" })
       vim.keymap.set({"i", "s"}, "<TAB>", function() return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<TAB>" end, {expr=true})
     end,
   },
