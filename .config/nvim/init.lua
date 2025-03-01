@@ -79,7 +79,9 @@ opt.winblend = 70
 opt.termguicolors = true
 
 opt.guifont = "JetBrainsMono Nerd Font:h12"
-opt.guicursor= { "a:Cursor-blinkwait500-blinkoff500-blinkon500", "i:ver25" }
+opt.guicursor= { "a:Cursor-blinkwait300-blinkoff300-blinkon450", "i:ver25" }
+opt.lines = 62
+opt.columns = 285
 
 opt.selectmode:append "mouse"
 -- }}}
@@ -223,10 +225,8 @@ require('lazy').setup({
     dependencies = { "rafamadriz/friendly-snippets" },
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
-
-      local ls = require("luasnip")
-
-      vim.keymap.set({"i", "s"}, "<TAB>", function() return ls.expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<TAB>" end, {expr=true})
+      require("luasnip.loaders.from_vscode").lazy_load({ path = vim.fn.stdpath'config'.."/snippet_overrides" })
+      vim.keymap.set({"i", "s"}, "<TAB>", function() return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<TAB>" end, {expr=true})
     end,
   },
 
