@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 vim=neovide
 pipe=./.nvim.pipe
 line=""
@@ -16,15 +16,21 @@ elif [[ "${args[0]}" == "-" ]]; then
   nvim -
 else
 	if [[ -S $pipe ]]; then
-		nvim --server $pipe --remote-send ":vs $line ${args[@]}<CR>"
-		osascript <<- EOI
+		for arg in "${args[@]}"; do
+			nvim --server $pipe --remote-send ":vs $line $arg<CR>"
+		done
+		osascript >/dev/null <<- EOI
 			tell application "System Events" to tell process "neovide"
 				set frontmost to true
-				windows where title contains "$(print -rD $PWD)"
+				windows where title contains "${PWD/$HOME/~}"
 				if result is not {} then perform action "AXRaise" of item 1 of result
 			end tell
 		EOI
 	else
-		$vim $line "${args[@]}" -- --listen $pipe
+		$vim $line "${args[0]}" -- --listen $pipe
+		sleep 0.1
+		for arg in "${args[@]:1}"; do
+			nvim --server $pipe --remote-send ":vs $line $arg<CR>"
+		done
 	fi
 fi

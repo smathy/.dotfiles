@@ -74,7 +74,13 @@ opt.shortmess:append "S"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.neovide_hide_mouse_when_typing = true
+vim.g.neovide_opacity = 0.9
+vim.g.neovide_transparency = vim.g.neovide_opacity
+vim.g.neovide_window_blurred = true
+
 opt.winblend = 70
+opt.pumblend = 20
 
 opt.termguicolors = true
 
@@ -295,9 +301,7 @@ require('lazy').setup({
           -- input window
           input = {
             keys = {
-              ["<space><space>"] = { "confirm", mode = { "n", "i" } },
-              ["<CR>"] = { "edit_vsplit", mode = { "n", "i" } },
-              ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+              ["<space><space>"] = { "edit_vsplit", mode = { "n", "i" } },
             },
           },
         },
