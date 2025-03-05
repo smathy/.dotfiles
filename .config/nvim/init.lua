@@ -24,14 +24,14 @@ opt.hlsearch=true
 opt.hidden = true
 opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 bo.autoindent = true
--- bo.cindent = true
+bo.cindent = true
 opt.mousefocus = true
 opt.laststatus = 3
 opt.titlestring = '%(  %{substitute(expand("%:~"), "/work/", "", "")}%)'
 
 opt.tabstop = 2
 opt.shiftwidth = 0
--- opt.expandtab = true
+opt.expandtab = true
 opt.smarttab = true
 
 wo.wrap = true
@@ -250,6 +250,7 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+  "RRethy/nvim-treesitter-endwise",
   'nvim-treesitter/nvim-treesitter-context',
 
   'iamcco/markdown-preview.nvim',
@@ -321,6 +322,7 @@ require('lazy').setup({
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>r", function() Snacks.picker.registers() end, desc = "Registers" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
       { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
       { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
@@ -345,7 +347,6 @@ require('lazy').setup({
       { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
       -- search
-      { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
       { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
       { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
       { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
@@ -640,7 +641,7 @@ vim.defer_fn(function()
     auto_install = false,
 
     highlight = { enable = true },
-    indent = { enable = true },
+    indent = { enable = false },
     incremental_selection = {
       enable = true,
       keymaps = {
@@ -713,7 +714,7 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
