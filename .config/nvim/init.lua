@@ -86,8 +86,6 @@ opt.termguicolors = true
 
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor= { "a:Cursor-blinkwait300-blinkoff300-blinkon450", "i:ver25" }
-opt.lines = 62
-opt.columns = 285
 
 opt.selectmode:append "mouse"
 -- }}}
@@ -194,12 +192,14 @@ require('lazy').setup({
       },
       sections = {
         lualine_a = {'branch'},
-        lualine_b = {'diff', 'diagnostics'},
+        lualine_b = {},
         lualine_c = {{
           'buffers',
           mode = 4,
           symbols = { modified = ' ' },
         }},
+        lualine_x = {'diff', 'diagnostics'},
+        lualine_y = {'progress'},
       },
     },
   },
@@ -322,6 +322,7 @@ require('lazy').setup({
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>*", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
       { "<leader>r", function() Snacks.picker.registers() end, desc = "Registers" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
       { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
@@ -345,7 +346,6 @@ require('lazy').setup({
       { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
       { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
       { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
-      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
       -- search
       { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
       { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
@@ -476,8 +476,8 @@ km.set('n', 'ZZ', ':xa<CR>')
 km.set('', '<F1>', '<nop>')
 km.set('!', '<F1>', '<nop>')
 
-km.set('n', '<M-Up>', ':bn<CR>')
-km.set('n', '<M-Down>', ':bp<CR>')
+km.set('n', '<M-Right>', ':bn<CR>')
+km.set('n', '<M-Left>', ':bp<CR>')
 km.set('n', '<M-BS>', ':bd!<CR>')
 km.set('n', '<M-Del>', ':bd!<CR>')
 km.set('n', '<Del>', ':bd!<CR>')
