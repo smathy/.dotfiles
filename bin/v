@@ -1,32 +1,38 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 vim=neovide
 pipe=./.nvim.pipe
-line=""
-args=("$@")
-re=':[0-9]+$'
-if [[ ${#args[@]} == 1 && ${args[0]} =~ $re ]]; then
-  pos=$(expr index "${args[0]}" ":")
-  line="+${args[0]:$pos}"
-  args=("${args[0]:0:$pos-1}")
-fi
+args=$@
+
+line_file() {
+  local re=':[0-9]+$'
+  local arg=$1
+  if [[ $arg =~ $re ]]; then
+    local pos=${arg[(I)[:]]}
+    local line="+${arg:$pos}"
+    arg="$line ${arg:0:$(($pos-1))}"
+  fi
+  echo $arg
+}
+
+send_alls() {
+  for arg in $@; do
+    nvim --server $pipe --remote-send ":vs $(line_file $arg)<CR>"
+  done
+}
 
 if [[ "$#" -eq 0 ]]; then
-	$vim
-elif [[ "${args[0]}" == "-" ]]; then
-  nvim -
+  $vim
+elif [[ "${args[1]}" == "-" ]]; then
+  nvim '+set buftype=nofile' -
 else
-	if [[ -S $pipe ]]; then
-    last_fn=
-		for arg in "${args[@]}"; do
-      last_fn=$arg
-			nvim --server $pipe --remote-send ":vs $line $arg<CR>"
-		done
-		osascript -e 'tell application "neovide" to activate'
-	else
-		$vim $line "${args[0]}" -- --listen $pipe
-		sleep 0.1
-		for arg in "${args[@]:1}"; do
-			nvim --server $pipe --remote-send ":vs $line $arg<CR>"
-		done
-	fi
+  if [[ ! -S $pipe ]]; then
+    $vim $(line_file $args[1]) -- --listen $pipe
+    shift args
+    sleep 0.1
+  fi
+
+  send_alls $args
+  osascript -e 'tell application "neovide" to activate'
 fi
+
+# vim: set ft=zsh

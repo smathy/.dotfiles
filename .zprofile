@@ -5,7 +5,7 @@ HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 HOMEBREW_AUTO_UPDATE_SECS=86400
 
-plugins=(bundler macos rake ruby gitfast asdf brew direnv)
+plugins=(bundler macos rake ruby gitfast mise brew direnv)
 
 MANPATH="/usr/local/man"
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
@@ -27,10 +27,7 @@ source $ZSH/oh-my-zsh.sh
 export GOPATH=~/work/go
 PATH=$GOPATH/bin:$PATH
 
-PATH="./bin:$HOME/bin:$PATH"
-
 export PGDATABASE=postgres
-export PATH MANPATH
 
 export RUBY_GC_HEAP_INIT_SLOTS=1250000
 export RUBY_HEAP_SLOTS_INCREMENT=100000
@@ -49,3 +46,6 @@ export RUBY_YJIT_ENABLE=1
 export NO_COVERAGE=1
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+PATH="./bin:$HOME/bin:$PATH"
+export PATH MANPATH
