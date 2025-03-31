@@ -29,13 +29,8 @@ PATH=$GOPATH/bin:$PATH
 
 export PGDATABASE=postgres
 
-export RUBY_GC_HEAP_INIT_SLOTS=1250000
-export RUBY_HEAP_SLOTS_INCREMENT=100000
-export RUBY_GC_MALLOC_LIMIT=30000000
-export RUBY_HEAP_FREE_MIN=12500
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1.2
-export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.4
 export RUBYOPT=--enable-frozen-string-literal
+export RUBY_DEBUG_BB=1
 
 # OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES fixes "Incomplete response received from application" error
 # # Might be related to: https://github.com/rails/rails/issues/38560

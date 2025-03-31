@@ -10,6 +10,7 @@ quit-after-last-window-closed = true
 
 macos-titlebar-style = tabs
 copy-on-select = clipboard
+clipboard-paste-protection = false
 
 unfocused-split-opacity = 0.5
 

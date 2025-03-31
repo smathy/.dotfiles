@@ -460,6 +460,7 @@ require('lazy').setup({
       { "<leader>jo", ":JiraOpen<cr>", desc = "Open Jira issue in browser", silent = true },
     },
   },
+
 }, {})
 -- }}}
 

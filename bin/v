@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 vim=neovide
 pipe=./.nvim.pipe
-args=$@
+args=($@)
 
 line_file() {
   local re=':[0-9]+$'
@@ -16,7 +16,7 @@ line_file() {
 
 send_alls() {
   for arg in $@; do
-    nvim --server $pipe --remote-send ":vs $(line_file $arg)<CR>"
+    nvim --server $pipe --remote-send ":vs $(line_file $arg)<CR>" > /dev/null
   done
 }
 
@@ -35,4 +35,4 @@ else
   osascript -e 'tell application "neovide" to activate'
 fi
 
-# vim: set ft=zsh
+# vim: ft=zsh

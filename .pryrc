@@ -1,26 +1,46 @@
 # frozen_string_literal: true
 
-Pry::Commands.block_command '!!' do
-  Rails.application.reloader.reload!
+Pry::Commands.command '!!' do |*args|
+  if args.empty?
+    Rails.application.reloader.reload!
+  else
+    args.each do |arg|
+      run "reload-code #{arg}"
+    end
+  end
 end  
 
-Pry::Commands.block_command 'r' do |*w|
+Pry::Commands.command "b" do |w|
+  require "debug"
+  if w
+    ::DEBUGGER__::SESSION.repl_add_breakpoint w
+  else
+    ::DEBUGGER__::SESSION.show_bps
+  end
+end
+
+Pry::Commands.command "del" do |w|
+  require "debug"
+  ::DEBUGGER__::SESSION.delete_bp w.to_i
+end
+
+Pry::Commands.command 'r' do |*w|
   run "show-routes" + ( w.present? ? " --grep '#{w.join ' '}'" : "" )
 end
 
-Pry::Commands.block_command "rg" do |w|
+Pry::Commands.command "rg" do |w|
   run %{.rg '#{w}'}
 end
 
-Pry::Commands.block_command ".." do |w|
+Pry::Commands.command ".." do |w|
   run %{cd ..}
 end
 
-Pry::Commands.block_command "..." do |w|
+Pry::Commands.command "..." do |w|
   run %{cd ../..}
 end
 
-Pry::Commands.block_command "...." do |w|
+Pry::Commands.command "...." do |w|
   run %{cd ../../..}
 end
 
