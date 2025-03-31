@@ -1,0 +1,43 @@
+<%
+  adapter = "sqlite"
+  db = Rails.application.name
+  test_db = "#{db}_test"
+
+  adapter = ENV["RAILS_ADAPTER"] if ENV["RAILS_ADAPTER"]
+  if adapter == "sqlite"
+    dir = Dir.exist?("storage") ? "storage" : "db"
+    db = File.join dir, "#{db}.sqlite"
+    test_db = File.join dir, "#{test_db}.sqlite"
+  end
+%>
+
+pg: &pg
+  adapter: postgresql
+  encoding: unicode
+
+mysql: &mysql
+  adapter: mysql2
+  encoding: utf8mb4
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+sqlite: &sqlite
+  adapter: sqlite3
+  timeout: 5000
+
+default: &default
+  database: <%= db %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  <<: *<%= adapter %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: <%= test_db %>
+
+production:
+  primary:
+    <<: *default
