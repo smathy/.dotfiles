@@ -40,7 +40,4 @@ export RAILS_LOG_LEVEL=debug
 export RUBY_YJIT_ENABLE=1
 export NO_COVERAGE=1
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-PATH="./bin:$HOME/bin:$PATH"
-export PATH MANPATH
+export PATH="./bin:$HOME/bin:$PATH"
