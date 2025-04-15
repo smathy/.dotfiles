@@ -20,17 +20,25 @@ send_alls() {
   done
 }
 
+ensure_nvim() {
+  if [[ ! -S $pipe ]]; then
+    local arg=$1
+    arg=${arg:+$(line_file $arg)}
+    $vim $arg -- --listen $pipe
+    [ $arg ] && shift args
+    sleep 0.1
+  fi
+}
+
 if [[ "$#" -eq 0 ]]; then
-  $vim
+  ensure_nvim
+  if [[ -f Session.vim ]]; then
+    nvim --server $pipe --remote-send "<ESC>:source Session.vim<CR>" > /dev/null
+  fi
 elif [[ "${args[1]}" == "-" ]]; then
   nvim '+set buftype=nofile' -
 else
-  if [[ ! -S $pipe ]]; then
-    $vim $(line_file $args[1]) -- --listen $pipe
-    shift args
-    sleep 0.1
-  fi
-
+  ensure_nvim $args[1]
   send_alls $args
   osascript -e 'tell application "neovide" to activate'
 fi
