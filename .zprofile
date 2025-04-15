@@ -20,7 +20,7 @@ if [ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin/ ]; then
   MANPATH=/opt/homebrew/opt/gnu-sed/libexec/gnuman:$MANPATH
 fi
 
-PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+PATH="/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -40,4 +40,5 @@ export RAILS_LOG_LEVEL=debug
 export RUBY_YJIT_ENABLE=1
 export NO_COVERAGE=1
 
+export PATH="/opt/homebrew/opt/gpatch/libexec/gnubin:/opt/homebrew/opt/gawk/libexec/gnubin:/opt/homebrew/opt/gnu-tar/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/llvm@18/bin:/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 export PATH="./bin:$HOME/bin:$PATH"

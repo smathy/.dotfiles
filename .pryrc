@@ -89,4 +89,8 @@ Pry.config.prompt = Pry::Prompt.new(
 
 Pry.config.output_prefix = ""
 
+def pp s
+  puts Pry::ColorPrinter.pp(s, ''.dup)
+end
+
 # vim: ft=ruby

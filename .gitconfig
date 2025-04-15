@@ -30,7 +30,7 @@
 	lc = log --no-merges --graph --pretty='format:%h %s'
 	ll = log --decorate --pretty=fuller --shortstat --abbrev-commit --dirstat
 	lp = log --decorate --pretty=fuller --stat --patch
-	m = co master
+  m = !git co $([ -f .git/refs/remotes/origin/HEAD ] && awk -F "/" '{print $NF}' .git/refs/remotes/origin/HEAD || echo master)
 	mg = merge --no-ff
 	names = show --pretty= --name-only
 	prr = pull-request
@@ -40,7 +40,7 @@
 	rh = reset --hard
 	rbi = !gitrbi
 	rbii = !git rb -i HEAD~10
-	rbm = !git rb master
+  rbm = !git rb $([ -f .git/refs/remotes/origin/HEAD ] && awk -F "/" '{print $NF}' .git/refs/remotes/origin/HEAD || echo master)
 	s = show --color-words
 	sign = commit --amend -sC HEAD
 	ss = co staging

@@ -16,7 +16,7 @@ line_file() {
 
 send_alls() {
   for arg in $@; do
-    nvim --server $pipe --remote-send ":vs $(line_file $arg)<CR>" > /dev/null
+    nvim --server $pipe --remote-send "<ESC>:vs $(line_file $arg)<CR>" > /dev/null
   done
 }
 
