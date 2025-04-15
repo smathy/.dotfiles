@@ -93,6 +93,7 @@ opt.selectmode:append "mouse"
 -- {{{ lazy
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
+local icons_lib = "nvim-tree/nvim-web-devicons"
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -180,9 +181,7 @@ require('lazy').setup({
   {
     -- See `:help lualine`
     'nvim-lualine/lualine.nvim',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
+    dependencies = { icons_lib },
     opts = {
       options = {
         icons_enabled = true,
@@ -204,27 +203,6 @@ require('lazy').setup({
     },
   },
 
-  -- Fuzzy Finder (files, lsp, etc)
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-      'onsails/lspkind.nvim',
-      {
-        "nvim-telescope/telescope-live-grep-args.nvim" ,
-        version = "^1.0.0",
-      },
-    },
-  },
-
   {
     "L3MON4D3/LuaSnip",
     build = "make install_jsregexp",
@@ -234,11 +212,6 @@ require('lazy').setup({
       require("luasnip.loaders.from_vscode").lazy_load()
       vim.keymap.set({"i", "s"}, "<TAB>", function() return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<TAB>" end, {expr=true})
     end,
-  },
-
-  {
-    'benfowler/telescope-luasnip.nvim',
-    module = "telescope._extensions.luasnip",
   },
 
   {
@@ -443,7 +416,7 @@ require('lazy').setup({
   {
     'MeanderingProgrammer/render-markdown.nvim',
     opts = {},
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = { 'nvim-treesitter/nvim-treesitter', icons_lib },
   },
 
   {
@@ -472,22 +445,18 @@ require('lazy').setup({
       web_search_engine = {
         provider = "brave",
       },
+      hints = { enabled = false },
+      file_selector = { provider = "snacks" },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
+      "folke/snacks.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      icons_lib,
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -621,72 +590,6 @@ km.set("n", "[t", function() tc.jump_prev() end, { desc = "Previous todo comment
 
 -- }}}
 
--- {{{ telescope extensions (fzf, luasnip, etc)
-local actions = require 'telescope.actions'
-
-local telescope = require('telescope')
-local lga_actions = require"telescope-live-grep-args.actions"
-
-telescope.setup {
-  defaults = {
-    vimgrep_arguments = { "rg", "--color=never", "--vimgrep" },
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-        ['<C-w>'] = "select_horizontal",
-        ['<C-e>'] = "select_default",
-        ['<CR>'] = "select_vertical",
-
-        ["<S-Up>"] = actions.cycle_history_prev,
-        ["<S-Down>"] = actions.cycle_history_next,
-
-      },
-    },
-  },
-  extensions = {
-    live_grep_args = {
-      auto_quoting = true, -- enable/disable auto-quoting
-      -- define mappings, e.g.
-      mappings = { -- extend mappings
-        i = {
-          ["<C-w>"] = lga_actions.quote_prompt({ postfix = " -w"}),
-          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --glob !/spec* --glob !/tests" }),
-          -- freeze the current list and start a fuzzy search in the frozen list
-          ["<C-space>"] = actions.to_fuzzy_refine,
-        },
-      },
-      -- ... also accepts theme settings, for example:
-      -- theme = "dropdown", -- use dropdown theme
-      -- theme = { }, -- use own theme spec
-      -- layout_config = { mirror=true }, -- mirror preview pane
-    },
-  },
-}
-
-pcall(telescope.load_extension, 'fzf')
-pcall(telescope.load_extension, 'luasnip')
-pcall(telescope.load_extension, 'live_grep_args')
-
--- See `:help telescope.builtin`
-local builtin = require 'telescope.builtin'
-local lga = telescope.extensions.live_grep_args
-local lga_shortcuts = require"telescope-live-grep-args.shortcuts"
-
-local function word_grep_string()
-  lga_shortcuts.grep_word_under_cursor{postfix = "", quote = false}
-end
-
--- vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
--- vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = '[b] Find existing buffers' })
--- vim.keymap.set('n', '<leader>g', builtin.git_files, { desc = 'Search [G]it files' })
--- vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = '[ ] Search files' })
--- vim.keymap.set('n', '<leader>/', lga.live_grep_args, { desc = '[/] Search by rg' })
--- vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
--- vim.keymap.set('n', '<leader>*', word_grep_string, { desc = '[*] Search current word' })
--- vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
--- }}}
-
 -- {{{ treesitter (syntax highlighting)
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
@@ -771,10 +674,7 @@ local on_attach = function(_, bufnr)
 
   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
