@@ -115,4 +115,41 @@ int() {
 	kill -INT -$1
 }
 
+rgm() {
+  method=$1
+
+  content() {
+    FOUND=0
+    SEP=$(printf "%${COLUMNS}s\n" | sed 's/ /─/g')
+    while IFS=$FS read -r json; do
+      ((FOUND++))
+
+      file=$(echo -E $json | jq .file | tr -d '"')
+      line=$(echo -E $json | jq .line)
+      count=$( echo $(echo -E $json | jq .content) | wc -l)
+
+      echo "\e[2m$SEP\e[0m"
+      echo "\e[1;39m$file\e[0m"
+      bat --color=always --paging=never --style=-header,numbers,snip -r $line:$(($line+$count-2)) $file
+
+    done < <(rg --json -PU "^([ \t]*)def ${method}\b.*?^\\1end[ \t]*$" | rgg '"type":"match"' | jq -c '{ file: .data.path.text, line: .data.line_number, content: .data.lines.text }')
+
+    if [[ "$FOUND" -eq 0 ]]; then
+      return 2
+    fi
+
+    echo "\e[2m$SEP\e[0m"
+  }
+  content
+}
+
+gg() {
+  git diff HEAD~${1:=0} --name-only --pretty=
+}
+
+vg() {
+  local files=$(gg $*)
+  v "${files[@]}"
+}
+
 # vim: ft=zsh

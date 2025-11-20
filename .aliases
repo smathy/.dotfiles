@@ -36,4 +36,8 @@ alias rgg="rg -M0"
 alias mkdir='mkdir -p'
 alias c=pbcopy
 
+alias -- --='git co -'
+
+alias diff=diff\ -bBu
+
 # vim: ft=zsh

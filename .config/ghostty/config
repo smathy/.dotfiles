@@ -1,4 +1,4 @@
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 background-opacity = 0.9
 background-blur-radius = 20
 
@@ -6,7 +6,10 @@ cursor-color = FFA500
 cursor-style = block
 cursor-style-blink = true
 
+scrollback-limit=200000000
+
 quit-after-last-window-closed = true
+confirm-close-surface = false
 
 macos-titlebar-style = tabs
 copy-on-select = clipboard
@@ -24,3 +27,4 @@ keybind = page_up=scroll_page_up
 keybind = page_down=scroll_page_down
 
 keybind = cmd+alt+equal=equalize_splits
+keybind = cmd+alt+enter=toggle_split_zoom

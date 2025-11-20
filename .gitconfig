@@ -14,8 +14,7 @@
 	ui = auto
 [alias]
 	alias = !git config -l | rg ^alias
-	mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
-	amend = commit --amend -C HEAD
+	amend = commit --amend -a -C HEAD
 	br = branch
 	cb = co -b
 	cc = co -
@@ -32,15 +31,13 @@
 	lp = log --decorate --pretty=fuller --stat --patch
   m = !git co $([ -f .git/refs/remotes/origin/HEAD ] && awk -F "/" '{print $NF}' .git/refs/remotes/origin/HEAD || echo master)
 	mg = merge --no-ff
-	names = show --pretty= --name-only
+	mm = "!f() { git merge $@ | egrep --color 'CONFLICT .*|$' ; }; f"
 	prr = pull-request
-	rb = rebase # "!f() { git rebase $@ | egrep --color 'CONFLICT .*|$' ; }; f"
 	rba = !git rb --abort
 	rbc = !git rb --continue
-	rh = reset --hard
-	rbi = !gitrbi
-	rbii = !git rb -i HEAD~10
+	rbii = !git rbi 10
   rbm = !git rb $([ -f .git/refs/remotes/origin/HEAD ] && awk -F "/" '{print $NF}' .git/refs/remotes/origin/HEAD || echo master)
+	rh = reset --hard
 	s = show --color-words
 	sign = commit --amend -sC HEAD
 	ss = co staging

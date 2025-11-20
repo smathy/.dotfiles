@@ -76,10 +76,10 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_opacity = 0.9
-vim.g.neovide_transparency = vim.g.neovide_opacity
+vim.g.neovide_normal_opacity = 0.9
 vim.g.neovide_window_blurred = true
 
-opt.winblend = 70
+opt.winblend = 20
 opt.pumblend = 20
 
 opt.termguicolors = true
@@ -387,6 +387,7 @@ require('lazy').setup({
           Snacks.toggle.inlay_hints():map("<leader>uh")
           Snacks.toggle.indent():map("<leader>ug")
           Snacks.toggle.dim():map("<leader>uD")
+          Snacks.input.enable()
         end,
       })
     end,
@@ -456,24 +457,25 @@ require('lazy').setup({
       "folke/snacks.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
+      "stevearc/dressing.nvim",
       icons_lib,
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
+      -- {
+      --   -- support for image pasting
+      --   "HakonHarnes/img-clip.nvim",
+      --   event = "VeryLazy",
+      --   opts = {
+      --     -- recommended settings
+      --     default = {
+      --       embed_image_as_base64 = false,
+      --       prompt_for_file_name = false,
+      --       drag_and_drop = {
+      --         insert_mode = true,
+      --       },
+      --       -- required for Windows users
+      --       use_absolute_path = true,
+      --     },
+      --   },
+      -- },
       {
         -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
@@ -571,7 +573,7 @@ vim.api.nvim_create_autocmd({'FileType'}, {
   pattern = 'help',
   command = 'wincmd L',
 })
-vim.api.nvim_create_autocmd({'BufEnter'}, { callback = function() vim.diagnostic.disable() end })
+vim.api.nvim_create_autocmd({'BufEnter'}, { callback = function() vim.diagnostic.enable(false) end })
 vim.api.nvim_create_autocmd({'BufNewFile'}, {
   pattern = "*.rb",
   command = "0r "..vim.fn.stdpath'config'.."/skel.rb",
@@ -715,17 +717,17 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    lspconfig[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-      init_options = (servers[server_name] or {}).init_options,
-    }
-  end
-}
+-- mason_lspconfig.setup_handlers {
+--   function(server_name)
+--     lspconfig[server_name].setup {
+--       capabilities = capabilities,
+--       on_attach = on_attach,
+--       settings = servers[server_name],
+--       filetypes = (servers[server_name] or {}).filetypes,
+--       init_options = (servers[server_name] or {}).init_options,
+--     }
+--   end
+-- }
 
 local configs = require("lspconfig.configs")
 
@@ -756,12 +758,12 @@ lspconfig.ruby_lsp.setup {
   on_attach = on_attach,
   init_options = {
     indexing = {
-      excluded_patterns = { "CHEETO-*/**/*", "APPS-*/**/*", "MDF-*/**/*", "NUM-*/**/*", "RACH-*/**/*", "RELEASE-*/**/*" },
+      excluded_patterns = {  "CHEETO-*/**/*", "PERF-*/**/*", "APPS-*/**/*", "MDF-*/**/*", "NUM-*/**/*", "RACH-*/**/*", "RELEASE-*/**/*" },
     },
   },
 }
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("error")
 -- }}}
 
 -- {{{ completion
