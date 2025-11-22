@@ -7,7 +7,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export ZSH=$HOME/.oh-my-zsh
 
-plugins=(bundler macos rake ruby gitfast mise brew direnv)
+plugins=(bundler macos rake ruby gitfast mise brew direnv ngrok)
 
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
