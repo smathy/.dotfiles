@@ -28,3 +28,4 @@ keybind = page_down=scroll_page_down
 
 keybind = cmd+alt+equal=equalize_splits
 keybind = cmd+alt+enter=toggle_split_zoom
+keybind = shift+enter=text:\x1b\r
