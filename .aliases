@@ -40,4 +40,6 @@ alias -- --='git co -'
 
 alias diff=diff\ -bBu
 
+alias ca=claude
+
 # vim: ft=zsh

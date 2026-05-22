@@ -17,7 +17,14 @@ clipboard-paste-protection = false
 
 unfocused-split-opacity = 0.5
 
-keybind = cmd+shift+x=write_screen_file:paste
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = bell
+notify-on-command-finish-after = 10s
+
+window-inherit-working-directory = false
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
+
 keybind = cmd+right=next_tab
 keybind = cmd+left=previous_tab
 keybind = cmd+shift+right=move_tab:1
@@ -28,4 +35,11 @@ keybind = page_down=scroll_page_down
 
 keybind = cmd+alt+equal=equalize_splits
 keybind = cmd+alt+enter=toggle_split_zoom
+
+keybind = cmd+alt+S=new_split:right
+keybind = chain=equalize_splits
+
 keybind = shift+enter=text:\x1b\r
+
+keybind = super+ctrl+arrow_up=resize_split:up,50
+keybind = super+ctrl+arrow_down=resize_split:down,50

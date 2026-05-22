@@ -34,6 +34,7 @@ export NO_COVERAGE=1
 path=(
   ./bin
   $HOME/bin
+  $HOME/.local/bin
   /opt/homebrew/opt/{gsed,gpatch,gawk,gnu-tar,findutils,coreutils}/libexec/gnubin
   /opt/homebrew/opt/llvm@18/bin
   $path

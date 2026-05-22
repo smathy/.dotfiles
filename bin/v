@@ -5,25 +5,26 @@ args=($@)
 
 line_file() {
   local re=':[0-9]+$'
-  local arg=$1
-  if [[ $arg =~ $re ]]; then
-    local pos=${arg[(I)[:]]}
-    local line="+${arg:$pos}"
-    arg="$line ${arg:0:$(($pos-1))}"
+  REPLY=$1
+  if [[ $REPLY =~ $re ]]; then
+    local pos=${REPLY[(I)[:]]}
+    local line="+${REPLY:$pos}"
+    REPLY="$line ${REPLY:0:$(($pos-1))}"
   fi
-  echo $arg
 }
 
 send_alls() {
   for arg in $@; do
-    nvim --server $pipe --remote-send "<ESC>:vs $(line_file $arg)<CR>" > /dev/null
+    line_file $arg
+    nvim --server $pipe --remote-send "<ESC>:vs $REPLY<CR>" > /dev/null
   done
 }
 
 ensure_nvim() {
   if [[ ! -S $pipe ]]; then
     local arg=$1
-    arg=${arg:+$(line_file $arg)}
+    line_file $arg
+    arg=${arg:+$REPLY}
     $vim $arg -- --listen $pipe
     [ $arg ] && shift args
     sleep 0.1

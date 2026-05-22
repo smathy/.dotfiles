@@ -8,7 +8,8 @@ erd.pdf
 *.dump
 Procfile.me
 bin/dbsync
-/node_modules/
+node_modules/
 /*.info
-/venv
-/.config/iterm2
+venv/
+.config/iterm2
+.claude/

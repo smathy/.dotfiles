@@ -185,7 +185,6 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'catppuccin',
         section_separators = { left = '', right = '' },
         component_separators = { left = '', right = '' },
       },
@@ -215,16 +214,18 @@ require('lazy').setup({
   },
 
   {
-    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
+    branch = "main",
+    lazy = false,
     build = ':TSUpdate',
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter-textobjects', branch = "main" },
+    },
   },
 
   "RRethy/nvim-treesitter-endwise",
   'nvim-treesitter/nvim-treesitter-context',
+  'aaronik/treewalker.nvim',
 
   'iamcco/markdown-preview.nvim',
 
@@ -593,75 +594,61 @@ km.set("n", "[t", function() tc.jump_prev() end, { desc = "Previous todo comment
 -- }}}
 
 -- {{{ treesitter (syntax highlighting)
--- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
-vim.defer_fn(function()
-  require('nvim-treesitter.configs').setup {
-    ensure_installed = { "ruby", "bash", "sql", "lua", "html", "css", "scss", "diff", "elixir", "eex", "heex", "csv", "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore", "go", "javascript", "jq", "json", "markdown", "markdown_inline", "nginx", "nix", "passwd", "perl", "readline", "regex", "ssh_config", "surface", "terraform", "tmux", "toml", "typescript", "vim", "vimdoc", "xml", "yaml", },
 
-    auto_install = false,
+-- Parsers — installed asynchronously on startup; no-op when already installed.
+local parsers = {
+  "ruby", "bash", "sql", "lua", "html", "css", "scss", "diff", "elixir",
+  "eex", "heex", "csv", "git_config", "git_rebase", "gitattributes",
+  "gitcommit", "gitignore", "go", "javascript", "jq", "json", "markdown",
+  "markdown_inline", "nginx", "nix", "passwd", "perl", "readline", "regex",
+  "ssh_config", "surface", "terraform", "tmux", "toml", "typescript", "vim",
+  "vimdoc", "xml", "yaml",
+}
+require("nvim-treesitter").install(parsers)
 
-    highlight = { enable = true },
-    indent = { enable = false },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = '<c-space>',
-        node_incremental = '<c-space>',
-        scope_incremental = '<c-s>',
-        node_decremental = '<M-space>',
-      },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-        keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ab'] = '@block.outer',
-          ['ib'] = '@block.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          [']M'] = '@function.outer',
-          [']C'] = '@class.outer',
-          [']B'] = '@block.outer',
-        },
-        goto_next_end = {
-          [']m'] = '@function.outer',
-          [']c'] = '@class.outer',
-          [']b'] = '@block.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[c'] = '@class.outer',
-          ['[b'] = '@block.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[C'] = '@class.outer',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
-    },
-  }
-end, 0)
+-- Highlight: enable for any filetype that has a parser; silently no-ops otherwise.
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function() pcall(vim.treesitter.start) end,
+})
+
+-- Textobjects: select / move / swap (keymaps moved out of setup in new API).
+require("nvim-treesitter-textobjects").setup({
+  select = { lookahead = true },
+  move   = { set_jumps = true },
+})
+
+local sel  = function(q)    return function() require("nvim-treesitter-textobjects.select").select_textobject(q, "textobjects") end end
+local mov  = function(fn,q) return function() require("nvim-treesitter-textobjects.move")[fn](q, "textobjects") end end
+local swp  = function(fn,q) return function() require("nvim-treesitter-textobjects.swap")[fn](q) end end
+
+for lhs, q in pairs({
+  aa = "@parameter.outer", ia = "@parameter.inner",
+  af = "@function.outer",  ["if"] = "@function.inner",
+  ab = "@block.outer",     ib = "@block.inner",
+  ac = "@class.outer",     ic = "@class.inner",
+}) do vim.keymap.set({ "x", "o" }, lhs, sel(q)) end
+
+for lhs, q in pairs({ ["]M"]="@function.outer", ["]C"]="@class.outer", ["]B"]="@block.outer" }) do
+  vim.keymap.set("n", lhs, mov("goto_next_start", q))
+end
+for lhs, q in pairs({ ["]m"]="@function.outer", ["]c"]="@class.outer", ["]b"]="@block.outer" }) do
+  vim.keymap.set("n", lhs, mov("goto_next_end", q))
+end
+for lhs, q in pairs({ ["[m"]="@function.outer", ["[c"]="@class.outer", ["[b"]="@block.outer" }) do
+  vim.keymap.set("n", lhs, mov("goto_previous_start", q))
+end
+for lhs, q in pairs({ ["[M"]="@function.outer", ["[C"]="@class.outer" }) do
+  vim.keymap.set("n", lhs, mov("goto_previous_end", q))
+end
+
+vim.keymap.set("n", "<leader>a", swp("swap_next",     "@parameter.inner"))
+vim.keymap.set("n", "<leader>A", swp("swap_previous", "@parameter.inner"))
+
+-- Tree navigation (replaces old incremental_selection; navigate AST with prior keys).
+vim.keymap.set({ "n", "v" }, "<c-space>", "<Cmd>Treewalker Up<CR>",    { silent = true })
+vim.keymap.set({ "n", "v" }, "<M-space>", "<Cmd>Treewalker Down<CR>",  { silent = true })
+vim.keymap.set({ "n", "v" }, "<c-s>",     "<Cmd>Treewalker Right<CR>", { silent = true })
+
 -- }}}
 
 -- {{{ LSP
@@ -758,12 +745,12 @@ lspconfig.ruby_lsp.setup {
   on_attach = on_attach,
   init_options = {
     indexing = {
-      excluded_patterns = {  "CHEETO-*/**/*", "PERF-*/**/*", "APPS-*/**/*", "MDF-*/**/*", "NUM-*/**/*", "RACH-*/**/*", "RELEASE-*/**/*" },
+      excluded_patterns = { "PERF-*/**/*" },
     },
   },
 }
 
-vim.lsp.set_log_level("error")
+vim.lsp.log.set_level("error")
 -- }}}
 
 -- {{{ completion
