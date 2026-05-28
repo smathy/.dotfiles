@@ -6,6 +6,7 @@ unsetopt global_rcs
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export ZSH=$HOME/.oh-my-zsh
+. ~/.xdgenv
 
 plugins=(bundler macos rake ruby gitfast mise brew direnv ngrok)
 
@@ -35,7 +36,7 @@ export NO_COVERAGE=1
 path=(
   ./bin
   $HOME/bin
-  $HOME/.local/bin
+  $XDG_BIN_HOME
   /opt/homebrew/opt/{gsed,gpatch,gawk,gnu-tar,findutils,coreutils}/libexec/gnubin
   /opt/homebrew/opt/llvm@18/bin
   $path

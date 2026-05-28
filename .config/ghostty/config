@@ -5,6 +5,7 @@ background-blur-radius = 20
 cursor-color = FFA500
 cursor-style = block
 cursor-style-blink = true
+bell-features = audio,attention,title
 
 scrollback-limit=200000000
 

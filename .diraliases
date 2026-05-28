@@ -1,0 +1,29 @@
+typeset -ga _local_alias_names
+
+function _load_local_aliases() {
+    # unload previous
+    for a in $_local_alias_names; do unalias $a 2>/dev/null; done
+    _local_alias_names=()
+
+    local dir=$PWD
+    local files=()
+    while [[ $dir != $HOME ]]; do
+        [[ -f $dir/.aliases ]] && files=($dir/.aliases $files)
+        dir=${dir:h}
+    done
+
+    local before=(${(k)aliases})
+    for f in $files; do source $f; done
+
+    # track anything newly defined
+    for a in ${(k)aliases}; do
+        [[ ${before[(i)$a]} -gt ${#before} ]] && _local_alias_names+=($a)
+    done
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _load_local_aliases
+
+_load_local_aliases
+
+# vim: ft=zsh

@@ -1,6 +1,7 @@
 alias V=sudo\ nvim
 
 alias vz='v ~/.zshrc'
+alias ve='v ~/.zshenv'
 alias vp='v ~/.zprofile'
 alias va='v ~/.aliases'
 alias vf='v ~/.functions'
