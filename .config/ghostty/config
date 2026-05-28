@@ -9,7 +9,7 @@ cursor-style-blink = true
 scrollback-limit=200000000
 
 quit-after-last-window-closed = true
-confirm-close-surface = false
+confirm-close-surface = always
 
 macos-titlebar-style = tabs
 copy-on-select = clipboard

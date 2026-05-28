@@ -224,8 +224,6 @@ require('lazy').setup({
   'nvim-treesitter/nvim-treesitter-context',
   'aaronik/treewalker.nvim',
 
-  'iamcco/markdown-preview.nvim',
-
   'tpope/vim-rails',
   'slim-template/vim-slim',
 

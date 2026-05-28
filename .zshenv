@@ -12,6 +12,7 @@ plugins=(bundler macos rake ruby gitfast mise brew direnv ngrok)
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
 PATH="/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/postgresql@15/bin:$PATH"
+PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 
 source $ZSH/oh-my-zsh.sh
 
