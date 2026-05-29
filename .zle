@@ -1,7 +1,5 @@
 bindkey -v
-export KEYTIMEOUT=1
-
-bindkey "^L" clear-screen
+export KEYTIMEOUT=16
 
 bindkey -M vicmd "^A" beginning-of-line
 bindkey -M vicmd "^E" end-of-line
@@ -39,6 +37,8 @@ bindkey -s "^[Ok" "+"
 bindkey -s "^[Om" "-"
 bindkey -s "^[Oj" "*"
 bindkey -s "^[Oo" "/"
+
+bindkey '\t\t' autosuggest-accept
 
 autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end

@@ -50,9 +50,8 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # export ANDROID_HOME=$HOME/Library/Android/sdk
 # export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
-sauces=("$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh")
-for f in $sauces; do
-	[ -f $f ] && . $f
+for plugin in $(brew --prefix)/share/zsh-*/*.zsh; do
+  source $plugin
 done
 
 . <(fzf --zsh)
