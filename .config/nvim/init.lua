@@ -227,6 +227,7 @@ require('lazy').setup({
   'tpope/vim-rails',
   'slim-template/vim-slim',
   'isobit/vim-caddyfile',
+  'https://codeberg.org/ziglang/zig.vim',
 
   {
     'windwp/nvim-autopairs',
