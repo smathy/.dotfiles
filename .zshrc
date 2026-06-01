@@ -12,7 +12,6 @@ export ZSH_THEME_GIT_PROMPT_DIRTY=" ~"
 export ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 . ~/.aliases
-. ~/.diraliases
 . ~/.dotfiles/.pop.sh
 . ~/.zle
 . ~/.secrets
