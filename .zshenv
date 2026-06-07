@@ -12,7 +12,6 @@ plugins=(bundler macos rake ruby gitfast mise brew direnv ngrok)
 
 FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
-PATH="/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/postgresql@15/bin:$PATH"
 PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 
 source $ZSH/oh-my-zsh.sh
@@ -33,11 +32,13 @@ export RAILS_LOG_LEVEL=debug
 export RUBY_YJIT_ENABLE=1
 export NO_COVERAGE=1
 
+export HOMEBREW_NO_ENV_HINTS=1
+
 path=(
   ./bin
   $HOME/bin
   $XDG_BIN_HOME
-  /opt/homebrew/opt/{gsed,gpatch,gawk,gnu-tar,findutils,coreutils}/libexec/gnubin
-  /opt/homebrew/opt/llvm@18/bin
+  /opt/homebrew/opt/{gsed,coreutils}/libexec/gnubin
+  /opt/homebrew/opt/{llvm@18,postgresql@15}/bin
   $path
 )

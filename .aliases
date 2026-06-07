@@ -31,13 +31,11 @@ alias lt="ll -T"
 alias cat=bat
 alias rm="rm -rf"
 
-alias rg='rg -M $(($COLUMNS - 28))'
+alias rg='rg -M (math $COLUMNS - 28)'
 alias rgg="rg -M0"
 
 alias mkdir='mkdir -p'
 alias c=pbcopy
-
-alias -- --='git co -'
 
 alias diff=diff\ -bBu
 

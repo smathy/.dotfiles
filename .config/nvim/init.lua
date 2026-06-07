@@ -84,7 +84,7 @@ opt.pumblend = 20
 
 opt.termguicolors = true
 
-opt.guifont = "JetBrainsMono Nerd Font:h12"
+opt.guifont = "Hasklug Nerd Font:h13"
 opt.guicursor= { "a:Cursor-blinkwait300-blinkoff300-blinkon450", "i:ver25" }
 
 opt.selectmode:append "mouse"

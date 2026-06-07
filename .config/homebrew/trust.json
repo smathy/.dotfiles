@@ -1,0 +1,6 @@
+{
+  "trustedformulae": [
+    "felixkratz/formulae/sketchybar",
+    "remoteoss/tap/dexter"
+  ]
+}
